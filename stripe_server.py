@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Sustituye por tu clave secreta de Stripe (sk_test_... o sk_live_...)
-stripe.api_key = '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'
+stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 
 @app.route('/crear-sesion', methods=['POST'])
 def crear_sesion():
@@ -34,8 +34,8 @@ def crear_sesion():
             payment_method_types=['card'],
             line_items=line_items,
             mode='payment',
-            success_url='https://tusitio.com/success',
-            cancel_url='https://tusitio.com/cancel',
+            success_url='https://anita-pinturitas-server.onrender.com/success',
+            cancel_url='https://anita-pinturitas-server.onrender.com/cancel',
         )
         return jsonify({'id': session.id})
     except Exception as e:
