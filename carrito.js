@@ -144,7 +144,7 @@ async function procesarPagoConStripe() {
     }
 
     try {
-        const response = await fetch('http://127.0.0.1:4242/crear-sesion', { // Asegúrate que la URL es correcta
+        const response = await fetch('https://anita-pinturitas-server.onrender.com/crear-sesion', { // Asegúrate que la URL es correcta
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
