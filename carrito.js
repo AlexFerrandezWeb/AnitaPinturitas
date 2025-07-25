@@ -133,10 +133,6 @@ function habilitarBotonPago() {
  */
 async function procesarPagoConStripe() {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    
-    // Aquí puedes añadir campos si quieres recoger más datos, como nombre y dirección
-    const nombreCliente = "Cliente"; // Opcional: obtener de un input
-    const direccionCliente = "Sin dirección"; // Opcional: obtener de un input
 
     if (carrito.length === 0) {
         alert("Tu carrito está vacío.");
@@ -150,9 +146,8 @@ async function procesarPagoConStripe() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                carrito: carrito,
-                nombre: nombreCliente,
-                direccion: direccionCliente
+                carrito: carrito
+                // No enviamos nombre ni dirección porque Stripe los pedirá directamente
             })
         });
 

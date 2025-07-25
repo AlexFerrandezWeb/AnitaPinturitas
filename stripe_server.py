@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import stripe
+from stripe_config import ALLOWED_COUNTRIES, SHIPPING_OPTIONS, SUCCESS_URL, CANCEL_URL, CURRENCY
 
 app = Flask(__name__)
 CORS(app)
@@ -13,14 +14,12 @@ stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 def crear_sesion():
     data = request.get_json()
     carrito = data.get('carrito', [])
-    nombre = data.get('nombre', '')
-    direccion = data.get('direccion', '')
 
     line_items = []
     for producto in carrito:
         line_items.append({
             'price_data': {
-                'currency': 'eur',
+                'currency': CURRENCY,
                 'product_data': {
                     'name': producto['nombre'],
                 },
@@ -34,8 +33,20 @@ def crear_sesion():
             payment_method_types=['card'],
             line_items=line_items,
             mode='payment',
-            success_url='https://anita-pinturitas-server.onrender.com/success',
-            cancel_url='https://anita-pinturitas-server.onrender.com/cancel',
+            success_url=SUCCESS_URL,
+            cancel_url=CANCEL_URL,
+            # Configuración para solicitar dirección de envío
+            shipping_address_collection={
+                'allowed_countries': ALLOWED_COUNTRIES,
+            },
+            # Configuración para solicitar información del cliente
+            customer_email=None,  # Stripe pedirá el email automáticamente
+            # Configuración para solicitar número de teléfono
+            phone_number_collection={
+                'enabled': True,
+            },
+            # Configuración para mostrar información de envío
+            shipping_options=SHIPPING_OPTIONS,
         )
         return jsonify({'id': session.id})
     except Exception as e:
