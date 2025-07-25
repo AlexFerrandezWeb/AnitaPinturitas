@@ -12,8 +12,8 @@ stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 # Configuración simplificada
 ALLOWED_COUNTRIES = ['ES']
 CURRENCY = 'eur'
-SUCCESS_URL = 'https://anitapinturitas.es/success'
-CANCEL_URL = 'https://anitapinturitas.es/carrito.html'
+SUCCESS_URL = 'https://anita-pinturitas-server.onrender.com/success'
+CANCEL_URL = 'https://anita-pinturitas-server.onrender.com/cancel'
 
 SHIPPING_OPTIONS = [
     {
@@ -111,13 +111,53 @@ def cancel():
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Redirigiendo...</title>
-        <meta http-equiv="refresh" content="0; url=https://anitapinturitas.es/carrito.html">
+        <title>Redirigiendo al carrito...</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+            }
+            .container {
+                text-align: center;
+                padding: 40px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 15px;
+                backdrop-filter: blur(10px);
+            }
+            .spinner {
+                border: 4px solid rgba(255, 255, 255, 0.3);
+                border-top: 4px solid white;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                animation: spin 1s linear infinite;
+                margin: 0 auto 20px;
+            }
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        </style>
+        <meta http-equiv="refresh" content="2; url=https://anitapinturitas.es/carrito.html">
     </head>
     <body>
-        <p>Redirigiendo al carrito...</p>
+        <div class="container">
+            <div class="spinner"></div>
+            <h2>Redirigiendo al carrito...</h2>
+            <p>Si no eres redirigido automáticamente, <a href="https://anitapinturitas.es/carrito.html" style="color: #fff; text-decoration: underline;">haz clic aquí</a></p>
+        </div>
         <script>
-            window.location.href = 'https://anitapinturitas.es/carrito.html';
+            setTimeout(function() {
+                window.location.href = 'https://anitapinturitas.es/carrito.html';
+            }, 2000);
         </script>
     </body>
     </html>
@@ -130,13 +170,45 @@ def success():
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Redirigiendo...</title>
-        <meta http-equiv="refresh" content="0; url=https://anitapinturitas.es/success">
+        <title>Pago exitoso - Redirigiendo...</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+                color: white;
+            }
+            .container {
+                text-align: center;
+                padding: 40px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 15px;
+                backdrop-filter: blur(10px);
+            }
+            .checkmark {
+                font-size: 60px;
+                margin-bottom: 20px;
+            }
+        </style>
+        <meta http-equiv="refresh" content="2; url=https://anitapinturitas.es/success">
     </head>
     <body>
-        <p>Redirigiendo a la página de éxito...</p>
+        <div class="container">
+            <div class="checkmark">✅</div>
+            <h2>¡Pago completado con éxito!</h2>
+            <p>Redirigiendo a la página de confirmación...</p>
+            <p>Si no eres redirigido automáticamente, <a href="https://anitapinturitas.es/success" style="color: #fff; text-decoration: underline;">haz clic aquí</a></p>
+        </div>
         <script>
-            window.location.href = 'https://anitapinturitas.es/success';
+            setTimeout(function() {
+                window.location.href = 'https://anitapinturitas.es/success';
+            }, 2000);
         </script>
     </body>
     </html>
