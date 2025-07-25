@@ -78,7 +78,7 @@ def crear_sesion():
         print(f"URLs - Success: {SUCCESS_URL}, Cancel: {CANCEL_URL}")
 
         session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
+            payment_method_types=['card', 'paypal'],
             line_items=line_items,
             mode='payment',
             success_url=SUCCESS_URL,
