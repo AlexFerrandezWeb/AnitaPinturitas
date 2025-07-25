@@ -9,6 +9,14 @@ ALLOWED_COUNTRIES = ['ES']  # Solo España por defecto
 # - Teléfono: Se solicita automáticamente (configurado en stripe_server.py)
 # - Dirección de envío: Se solicita automáticamente
 
+# Funcionalidades de productos:
+# - Imágenes: Se muestran automáticamente en la página de Stripe
+#   * Las rutas relativas se convierten automáticamente en URLs absolutas
+#   * Base URL: https://anitapinturitas.es
+#   * Formato: https://anitapinturitas.es/assets/producto1.jpg
+# - Nombres: Se muestran con el nombre del producto
+# - Precios: Se calculan automáticamente
+
 # Lógica de envío:
 # - Pedidos de 62€ o más: ENVÍO GRATUITO
 # - Pedidos menores a 62€: 6.95€ de gastos de envío

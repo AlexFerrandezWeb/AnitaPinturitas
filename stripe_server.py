@@ -10,6 +10,23 @@ CORS(app)
 # Sustituye por tu clave secreta de Stripe (sk_test_... o sk_live_...)
 stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 
+def convertir_imagen_a_url_absoluta(imagen_path):
+    """
+    Convierte una ruta relativa de imagen en una URL absoluta para Stripe.
+    """
+    # URL base de tu sitio web
+    base_url = "https://anitapinturitas.es"
+    
+    # Si la imagen ya es una URL completa, la devolvemos tal como está
+    if imagen_path.startswith('http'):
+        return imagen_path
+    
+    # Si es una ruta relativa, la convertimos en URL absoluta
+    if imagen_path.startswith('/'):
+        return base_url + imagen_path
+    else:
+        return base_url + '/' + imagen_path
+
 @app.route('/crear-sesion', methods=['POST'])
 def crear_sesion():
     data = request.get_json()
@@ -23,11 +40,15 @@ def crear_sesion():
     
     line_items = []
     for producto in carrito:
+        # Convertir la imagen a URL absoluta para Stripe
+        imagen_url = convertir_imagen_a_url_absoluta(producto['imagen'])
+        
         line_items.append({
             'price_data': {
                 'currency': CURRENCY,
                 'product_data': {
                     'name': producto['nombre'],
+                    'images': [imagen_url],  # Añadir imagen del producto
                 },
                 'unit_amount': int(float(producto['precio']) * 100),
             },
