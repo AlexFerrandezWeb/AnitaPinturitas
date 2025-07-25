@@ -95,16 +95,105 @@ function eliminarProducto(index) {
 }
 
 /**
+ * Muestra un banner informativo sobre el envío gratuito en la parte superior.
+ * @param {number} subtotal - El subtotal actual.
+ */
+function mostrarBannerEnvioGratuito(subtotal) {
+    const carritoSection = document.querySelector('.carrito-section');
+    let bannerEnvio = document.getElementById('banner-envio-gratuito');
+    
+    // Crear el banner si no existe
+    if (!bannerEnvio) {
+        bannerEnvio = document.createElement('div');
+        bannerEnvio.id = 'banner-envio-gratuito';
+        bannerEnvio.className = 'banner-envio-gratuito';
+        carritoSection.insertBefore(bannerEnvio, carritoSection.firstChild);
+    }
+
+    if (subtotal >= 62) {
+        // Envío gratuito conseguido
+        bannerEnvio.innerHTML = `
+            <div class="banner-contenido banner-gratuito">
+                <i class="fas fa-shipping-fast"></i>
+                <span>¡Envío gratuito conseguido! Tu pedido será enviado sin costes adicionales.</span>
+            </div>
+        `;
+        bannerEnvio.style.display = 'block';
+    } else if (subtotal > 0) {
+        // Mostrar cuánto falta para envío gratuito
+        const faltante = 62 - subtotal;
+        bannerEnvio.innerHTML = `
+            <div class="banner-contenido banner-faltante">
+                <i class="fas fa-info-circle"></i>
+                <span>Añade ${faltante.toFixed(2)}€ más a tu pedido para conseguir envío gratuito</span>
+                <a href="/productos.html" class="btn-seguir-comprando-banner">Ver más productos</a>
+            </div>
+        `;
+        bannerEnvio.style.display = 'block';
+    } else {
+        // Carrito vacío
+        bannerEnvio.style.display = 'none';
+    }
+}
+
+/**
  * Actualiza el resumen del pedido (subtotal, envío y total).
  * @param {number} subtotal - El subtotal de los productos.
  */
 function actualizarResumen(subtotal) {
     const envio = subtotal >= 62 ? 0 : 6.95;
     const total = subtotal + envio;
+    const faltante = 62 - subtotal;
 
     document.getElementById('subtotal').textContent = `${subtotal.toFixed(2)} €`;
     document.getElementById('envio').textContent = `${envio.toFixed(2)} €`;
     document.getElementById('total').textContent = `${total.toFixed(2)} €`;
+
+    // Mostrar mensaje sobre envío gratuito
+    mostrarMensajeEnvioGratuito(subtotal, faltante);
+    // Mostrar banner informativo
+    mostrarBannerEnvioGratuito(subtotal);
+}
+
+/**
+ * Muestra un mensaje informativo sobre el envío gratuito.
+ * @param {number} subtotal - El subtotal actual.
+ * @param {number} faltante - Cuánto falta para envío gratuito.
+ */
+function mostrarMensajeEnvioGratuito(subtotal, faltante) {
+    const resumenDetalles = document.querySelector('.resumen-detalles');
+    let mensajeEnvio = document.getElementById('mensaje-envio-gratuito');
+    
+    // Crear el elemento de mensaje si no existe
+    if (!mensajeEnvio) {
+        mensajeEnvio = document.createElement('div');
+        mensajeEnvio.id = 'mensaje-envio-gratuito';
+        mensajeEnvio.className = 'mensaje-envio';
+        resumenDetalles.appendChild(mensajeEnvio);
+    }
+
+    if (subtotal >= 62) {
+        // Envío gratuito conseguido
+        mensajeEnvio.innerHTML = `
+            <div class="mensaje-envio-gratuito">
+                <i class="fas fa-shipping-fast"></i>
+                <span>¡Envío gratuito conseguido!</span>
+            </div>
+        `;
+        mensajeEnvio.style.display = 'block';
+    } else if (subtotal > 0) {
+        // Mostrar cuánto falta para envío gratuito
+        mensajeEnvio.innerHTML = `
+            <div class="mensaje-envio-faltante">
+                <i class="fas fa-info-circle"></i>
+                <span>Añade ${faltante.toFixed(2)}€ más para envío gratuito</span>
+            </div>
+        `;
+        mensajeEnvio.style.display = 'block';
+    } else {
+        // Carrito vacío
+        mensajeEnvio.style.display = 'none';
+    }
 }
 
 /**
