@@ -12,8 +12,8 @@ stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 # Configuración simplificada
 ALLOWED_COUNTRIES = ['ES']
 CURRENCY = 'eur'
-SUCCESS_URL = 'https://anitapinturitas.es/success'
-CANCEL_URL = 'https://anitapinturitas.es/carrito.html'
+SUCCESS_URL = 'https://anita-pinturitas-server.onrender.com/success'
+CANCEL_URL = 'https://anita-pinturitas-server.onrender.com/cancel'
 
 SHIPPING_OPTIONS = [
     {
@@ -103,6 +103,44 @@ def crear_sesion():
 @app.route('/test', methods=['GET'])
 def test():
     return jsonify({'status': 'ok', 'message': 'Servidor funcionando correctamente'})
+
+@app.route('/cancel', methods=['GET'])
+def cancel():
+    """Redirige a la página del carrito en el sitio principal"""
+    return """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Redirigiendo...</title>
+        <meta http-equiv="refresh" content="0; url=https://anitapinturitas.es/carrito.html">
+    </head>
+    <body>
+        <p>Redirigiendo al carrito...</p>
+        <script>
+            window.location.href = 'https://anitapinturitas.es/carrito.html';
+        </script>
+    </body>
+    </html>
+    """
+
+@app.route('/success', methods=['GET'])
+def success():
+    """Redirige a la página de éxito en el sitio principal"""
+    return """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Redirigiendo...</title>
+        <meta http-equiv="refresh" content="0; url=https://anitapinturitas.es/success">
+    </head>
+    <body>
+        <p>Redirigiendo a la página de éxito...</p>
+        <script>
+            window.location.href = 'https://anitapinturitas.es/success';
+        </script>
+    </body>
+    </html>
+    """
 
 if __name__ == '__main__':
     print("Iniciando servidor de Stripe...")
