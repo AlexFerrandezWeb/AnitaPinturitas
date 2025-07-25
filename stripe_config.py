@@ -9,13 +9,17 @@ ALLOWED_COUNTRIES = ['ES']  # Solo España por defecto
 # - Teléfono: Se solicita automáticamente (configurado en stripe_server.py)
 # - Dirección de envío: Se solicita automáticamente
 
-# Configuración de opciones de envío
+# Lógica de envío:
+# - Pedidos de 62€ o más: ENVÍO GRATUITO
+# - Pedidos menores a 62€: 6.95€ de gastos de envío
+
+# Configuración de opciones de envío (solo se aplica para pedidos < 62€)
 SHIPPING_OPTIONS = [
     {
         'shipping_rate_data': {
             'type': 'fixed_amount',
             'fixed_amount': {
-                'amount': 599,  # 5.99€ en centavos
+                'amount': 695,  # 6.95€ en centavos
                 'currency': 'eur',
             },
             'display_name': 'Envío estándar',

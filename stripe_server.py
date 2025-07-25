@@ -15,6 +15,12 @@ def crear_sesion():
     data = request.get_json()
     carrito = data.get('carrito', [])
 
+    # Calcular el subtotal del pedido
+    subtotal = sum(float(producto['precio']) * int(producto['cantidad']) for producto in carrito)
+    
+    # Determinar si el envío es gratuito (pedidos de 62€ o más)
+    envio_gratuito = subtotal >= 62
+    
     line_items = []
     for producto in carrito:
         line_items.append({
@@ -27,6 +33,11 @@ def crear_sesion():
             },
             'quantity': int(producto['cantidad']),
         })
+
+    # Configurar opciones de envío dinámicamente
+    shipping_options = []
+    if not envio_gratuito:
+        shipping_options = SHIPPING_OPTIONS
 
     try:
         session = stripe.checkout.Session.create(
@@ -45,8 +56,8 @@ def crear_sesion():
             phone_number_collection={
                 'enabled': True,
             },
-            # Configuración para mostrar información de envío
-            shipping_options=SHIPPING_OPTIONS,
+            # Configuración para mostrar información de envío (solo si no es gratuito)
+            shipping_options=shipping_options,
         )
         return jsonify({'id': session.id})
     except Exception as e:

@@ -99,7 +99,7 @@ function eliminarProducto(index) {
  * @param {number} subtotal - El subtotal de los productos.
  */
 function actualizarResumen(subtotal) {
-    const envio = subtotal > 50 ? 0 : 5.99;
+    const envio = subtotal >= 62 ? 0 : 6.95;
     const total = subtotal + envio;
 
     document.getElementById('subtotal').textContent = `${subtotal.toFixed(2)} €`;
