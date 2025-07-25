@@ -12,8 +12,8 @@ stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 # Configuración simplificada
 ALLOWED_COUNTRIES = ['ES']
 CURRENCY = 'eur'
-SUCCESS_URL = 'https://anita-pinturitas-server.onrender.com/success'
-CANCEL_URL = 'https://anita-pinturitas-server.onrender.com/cancel'
+SUCCESS_URL = 'https://anitapinturitas.es/success'
+CANCEL_URL = 'https://anitapinturitas.es/carrito.html'
 
 SHIPPING_OPTIONS = [
     {
