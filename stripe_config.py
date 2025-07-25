@@ -67,8 +67,8 @@ SHIPPING_OPTIONS = [
 ]
 
 # URLs de éxito y cancelación
-SUCCESS_URL = 'https://anita-pinturitas-server.onrender.com/success'
-CANCEL_URL = 'https://anita-pinturitas-server.onrender.com/cancel'
+SUCCESS_URL = 'https://anitapinturitas.es/success'
+CANCEL_URL = 'https://anitapinturitas.es/carrito.html'
 
 # Configuración de moneda
 CURRENCY = 'eur' 
