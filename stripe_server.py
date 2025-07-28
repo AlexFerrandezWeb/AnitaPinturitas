@@ -9,6 +9,8 @@ CORS(app)
 
 # Configurar Stripe
 stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
+print(f"Stripe API key configured: {'Yes' if stripe.api_key else 'No'}")
+print(f"Stripe version: {stripe.VERSION}")
 
 @app.route('/', methods=['GET'])
 def health_check():
@@ -141,4 +143,5 @@ def crear_sesion_simple():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
-    app.run(host='0.0.0.0', port=port)
+    print(f"Starting server on port {port}")
+    app.run(host='0.0.0.0', port=port, debug=False)
