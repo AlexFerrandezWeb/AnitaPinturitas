@@ -6,4 +6,7 @@ services:
     startCommand: python stripe_server.py
     envVars:
       - key: STRIPE_SECRET_KEY
-        sync: false 
+        sync: false
+    envVars:
+      - key: PORT
+        value: 10000 
