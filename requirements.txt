@@ -1,5 +1,3 @@
 flask
 flask-cors
 stripe==8.0.0
-requests
-gunicorn
