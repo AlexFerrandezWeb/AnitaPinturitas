@@ -3,10 +3,7 @@ services:
     name: anita-pinturitas-v2
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: python stripe_server.py
+    startCommand: gunicorn stripe_server:app --bind 0.0.0.0:8080
     envVars:
       - key: STRIPE_SECRET_KEY
-        sync: false
-    envVars:
-      - key: PORT
-        value: 10000 
+        sync: false 
