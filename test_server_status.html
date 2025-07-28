@@ -266,6 +266,9 @@
                 if (data.includes('unknown parameter')) {
                     resultDiv.className = 'result error';
                     resultDiv.textContent = `❌ Error: Incluso la sesión simple falla\n\nRespuesta: ${data}`;
+                } else if (data.includes('line_items')) {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = `❌ Error: Formato de line_items incorrecto\n\nRespuesta: ${data}`;
                 } else {
                     resultDiv.className = 'result success';
                     resultDiv.textContent = `✅ Sesión simple creada\n\nRespuesta: ${data}`;

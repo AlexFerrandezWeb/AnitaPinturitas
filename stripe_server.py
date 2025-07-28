@@ -36,6 +36,21 @@ def diagnostico():
         "imagenes": "URLs absolutas configuradas"
     })
 
+@app.route('/test-line-items', methods=['POST'])
+def test_line_items():
+    try:
+        data = request.get_json()
+        items = data.get('items', [])
+        
+        return jsonify({
+            "received_items": items,
+            "items_count": len(items),
+            "message": "Formato de items recibido correctamente"
+        })
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/crear-sesion', methods=['POST'])
 def crear_sesion():
     try:
@@ -99,9 +114,9 @@ def crear_sesion_simple():
         if not items:
             return jsonify({"error": "No hay items"}), 400
         
-        # Crear sesión ultra-simple
+        # Crear sesión ultra-simple con formato correcto
         session = stripe.checkout.Session.create(
-            line_items=items,
+            line_items=items,  # items ya debe estar en formato correcto
             mode='payment',
             success_url='https://anitapinturitas.es/carrito.html?success=true',
             cancel_url='https://anitapinturitas.es/carrito.html?canceled=true'
