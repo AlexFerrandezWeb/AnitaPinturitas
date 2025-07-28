@@ -15,6 +15,23 @@ SUCCESS_URL = 'https://anita-pinturitas-server.onrender.com/success'
 CANCEL_URL = 'https://anita-pinturitas-server.onrender.com/cancel'
 IMAGEN_POR_DEFECTO = "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=300&fit=crop&crop=center"
 
+@app.route('/diagnostico', methods=['GET'])
+def diagnostico():
+    """Endpoint para diagnosticar qué versión está ejecutándose"""
+    return jsonify({
+        'version': 'ULTRA_SIMPLIFICADA_v1.0',
+        'fecha': '2025-01-27',
+        'caracteristicas': [
+            'Sin automatic_payment_methods',
+            'Sin payment_method_types',
+            'Sin payment_method_collection',
+            'Sin shipping_options',
+            'Configuración mínima'
+        ],
+        'stripe_api_key': 'Configurada' if stripe.api_key else 'No configurada',
+        'mensaje': 'Esta es la versión ultra-simplificada sin parámetros problemáticos'
+    })
+
 @app.route('/crear-sesion', methods=['POST'])
 def crear_sesion():
     try:
@@ -187,4 +204,4 @@ def success():
 if __name__ == '__main__':
     print("Iniciando servidor de Stripe...")
     print(f"Clave de Stripe configurada: {'Sí' if stripe.api_key else 'No'}")
-    app.run(port=4242, debug=True) 
+    app.run(port=4242, debug=True)
