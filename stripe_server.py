@@ -58,20 +58,13 @@ def crear_sesion():
                 'images': []
             }
 
-            # Mejorar el manejo de imágenes
             imagen_url = producto.get('imagen')
             if imagen_url:
-                # Convertir a URL absoluta
                 if imagen_url.startswith('/'):
                     imagen_url = f"https://anitapinturitas.es{imagen_url}"
                 elif not imagen_url.startswith('http'):
                     imagen_url = f"https://anitapinturitas.es/{imagen_url.lstrip('/')}"
-                
-                # Verificar que la URL sea válida
-                if imagen_url.startswith('https://'):
-                    product_data['images'].append(imagen_url)
-                else:
-                    product_data['images'].append(IMAGEN_POR_DEFECTO)
+                product_data['images'].append(imagen_url)
             else:
                 product_data['images'].append(IMAGEN_POR_DEFECTO)
 
@@ -86,7 +79,6 @@ def crear_sesion():
 
         shipping_options = [] if envio_gratuito else SHIPPING_OPTIONS
 
-        # Configuración simplificada sin PayPal por ahora
         session = stripe.checkout.Session.create(
             line_items=line_items,
             mode='payment',
@@ -102,14 +94,13 @@ def crear_sesion():
             locale='es',
             billing_address_collection='required',
             payment_method_collection='always',
-            payment_method_types=['card'],
+            automatic_payment_methods={'enabled': True},  # 🔥 AQUÍ está la clave
             metadata={
                 'source': 'anita_pinturitas_web'
             }
         )
         
         print(f"Sesión creada exitosamente: {session.id}")
-        print(f"Métodos de pago disponibles: {session.payment_method_types}")
         return jsonify({'id': session.id})
         
     except Exception as e:
@@ -126,12 +117,12 @@ def test_payment_methods():
     try:
         # Crear una sesión de prueba para verificar métodos de pago
         test_session = stripe.checkout.Session.create(
+            payment_method_types=['card', 'paypal'],
             line_items=[{
                 'price_data': {
                     'currency': 'eur',
                     'product_data': {
                         'name': 'Test Product',
-                        'images': [IMAGEN_POR_DEFECTO]
                     },
                     'unit_amount': 1000,  # 10€
                 },
@@ -140,8 +131,6 @@ def test_payment_methods():
             mode='payment',
             success_url='https://example.com/success',
             cancel_url='https://example.com/cancel',
-            payment_method_types=['card'],
-            locale='es'
         )
         
         return jsonify({

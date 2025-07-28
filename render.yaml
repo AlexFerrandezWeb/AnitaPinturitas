@@ -1,9 +1,0 @@
-services:
-  - type: web
-    name: anita-pinturitas-server
-    env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: python stripe_server.py
-    envVars:
-      - key: STRIPE_SECRET_KEY
-        sync: false 

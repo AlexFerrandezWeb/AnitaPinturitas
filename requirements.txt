@@ -1,3 +1,4 @@
-flask
-flask-cors
-stripe==8.0.0
+Flask
+stripe
+Flask-Cors
+gunicorn
