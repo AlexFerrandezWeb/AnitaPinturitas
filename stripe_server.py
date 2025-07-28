@@ -41,11 +41,10 @@ SHIPPING_OPTIONS = [
     },
 ]
 
-@app.route('/crear-sesion-v2', methods=['POST'])
-def crear_sesion_v2():
+@app.route('/crear-sesion', methods=['POST'])
+def crear_sesion():
     try:
-        print("🆕 NUEVA RUTA V2 - Recibida petición para crear sesión")
-        print("✅ Usando payment_method_types=['card', 'paypal']")
+        print("✅ Código actualizado - usando payment_method_types en lugar de automatic_payment_methods")
         data = request.get_json()
         carrito = data.get('carrito', [])
 

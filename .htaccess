@@ -52,4 +52,3 @@ RewriteRule ^(.*)\.(jpg|jpeg|png|gif)$ $1.$2 [L]
     ExpiresByType image/png "access plus 0 seconds"
     ExpiresByType image/gif "access plus 0 seconds"
 </IfModule> 
-
