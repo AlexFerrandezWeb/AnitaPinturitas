@@ -93,13 +93,14 @@ def crear_sesion():
             shipping_options=shipping_options,
             locale='es',
             billing_address_collection='required',
-            payment_method_types=['card', 'paypal'],
+            payment_method_types=['card', 'paypal'],  # Versión corregida sin automatic_payment_methods
             metadata={
                 'source': 'anita_pinturitas_web'
             }
         )
         
         print(f"Sesión creada exitosamente: {session.id}")
+        print("✅ Código actualizado - usando payment_method_types en lugar de automatic_payment_methods")
         return jsonify({'id': session.id})
         
     except Exception as e:
