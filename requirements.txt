@@ -1,4 +1,4 @@
 Flask
-stripe
+stripe>=7.0.0
 Flask-Cors
 gunicorn
