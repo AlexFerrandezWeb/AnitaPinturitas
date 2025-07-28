@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: anita-pinturitas-v2
+    name: anita-pinturitas-server
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: python stripe_server.py
