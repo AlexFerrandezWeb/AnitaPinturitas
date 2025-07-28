@@ -41,10 +41,10 @@ SHIPPING_OPTIONS = [
     },
 ]
 
-@app.route('/pagar-ahora', methods=['POST'])
-def pagar_ahora():
+@app.route('/checkout-nuevo', methods=['POST'])
+def checkout_nuevo():
     try:
-        print("🚀 NUEVA RUTA /pagar-ahora - Sin automatic_payment_methods")
+        print("🚀 NUEVA RUTA /checkout-nuevo - Sin automatic_payment_methods")
         data = request.get_json()
         carrito = data.get('carrito', [])
 
@@ -99,7 +99,7 @@ def pagar_ahora():
             }
         )
         
-        print(f"🚀 NUEVA RUTA /pagar-ahora - Sesión creada exitosamente: {session.id}")
+        print(f"🚀 NUEVA RUTA /checkout-nuevo - Sesión creada exitosamente: {session.id}")
         print("✅ Sin automatic_payment_methods - Solo payment_method_types=['card', 'paypal']")
         return jsonify({'id': session.id})
         
@@ -109,7 +109,12 @@ def pagar_ahora():
 
 @app.route('/test', methods=['GET'])
 def test():
-    return jsonify({'status': 'ok', 'message': 'Servidor funcionando correctamente'})
+    return jsonify({
+        'status': 'ok', 
+        'message': 'Servidor funcionando correctamente',
+        'version': 'checkout-nuevo',
+        'timestamp': '2025-01-27'
+    })
 
 @app.route('/test-payment-methods', methods=['GET'])
 def test_payment_methods():

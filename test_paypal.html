@@ -80,7 +80,7 @@
             resultDiv.innerHTML = '<div class="result">🔄 Creando sesión con PayPal...</div>';
             
             try {
-                const response = await fetch('https://anita-pinturitas-server.onrender.com/pagar-ahora', {
+                const response = await fetch('https://anita-pinturitas-server.onrender.com/checkout-nuevo', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
