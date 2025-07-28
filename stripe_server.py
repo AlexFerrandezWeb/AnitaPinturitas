@@ -10,6 +10,14 @@ CORS(app)
 # Configurar Stripe
 stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
 
+@app.route('/', methods=['GET'])
+def health_check():
+    return jsonify({
+        "status": "Servidor funcionando",
+        "stripe_version": stripe.VERSION,
+        "message": "Health check exitoso"
+    })
+
 @app.route('/test', methods=['GET'])
 def test():
     return jsonify({
@@ -132,5 +140,5 @@ def crear_sesion_simple():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8080))
+    port = int(os.environ.get('PORT', 10000))
     app.run(host='0.0.0.0', port=port)
