@@ -86,34 +86,27 @@ def crear_sesion():
 
         shipping_options = [] if envio_gratuito else SHIPPING_OPTIONS
 
-        # Configuración tradicional para métodos de pago
-        session_config = {
-            'line_items': line_items,
-            'mode': 'payment',
-            'success_url': SUCCESS_URL,
-            'cancel_url': CANCEL_URL,
-            'shipping_address_collection': {
+        # Configuración simplificada sin PayPal por ahora
+        session = stripe.checkout.Session.create(
+            line_items=line_items,
+            mode='payment',
+            success_url=SUCCESS_URL,
+            cancel_url=CANCEL_URL,
+            shipping_address_collection={
                 'allowed_countries': ALLOWED_COUNTRIES,
             },
-            'phone_number_collection': {
+            phone_number_collection={
                 'enabled': True,
             },
-            'shipping_options': shipping_options,
-            'locale': 'es',
-            'billing_address_collection': 'required',
-            'payment_method_collection': 'always',
-            'payment_method_types': ['card', 'paypal'],
-            'payment_method_options': {
-                'paypal': {
-                    'preferred_locale': 'es_ES'
-                }
-            },
-            'metadata': {
+            shipping_options=shipping_options,
+            locale='es',
+            billing_address_collection='required',
+            payment_method_collection='always',
+            payment_method_types=['card'],
+            metadata={
                 'source': 'anita_pinturitas_web'
             }
-        }
-
-        session = stripe.checkout.Session.create(**session_config)
+        )
         
         print(f"Sesión creada exitosamente: {session.id}")
         print(f"Métodos de pago disponibles: {session.payment_method_types}")
@@ -147,7 +140,7 @@ def test_payment_methods():
             mode='payment',
             success_url='https://example.com/success',
             cancel_url='https://example.com/cancel',
-            payment_method_types=['card', 'paypal'],
+            payment_method_types=['card'],
             locale='es'
         )
         
