@@ -43,7 +43,7 @@ SHIPPING_OPTIONS = [
 def test():
     return jsonify({
         'status': 'ok', 
-        'message': 'NUEVO SERVidor funcionando correctamente',
+        'message': 'NUEVO SERVidor funcionando correctamente - VERSION 2025',
         'version': 'payment-server-2025',
         'timestamp': '2025-01-27-15:45',
         'server': 'payment_server.py'
