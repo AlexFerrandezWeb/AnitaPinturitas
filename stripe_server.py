@@ -41,10 +41,10 @@ SHIPPING_OPTIONS = [
     },
 ]
 
-@app.route('/checkout-nuevo', methods=['POST'])
-def checkout_nuevo():
+@app.route('/stripe-payment-2025', methods=['POST'])
+def stripe_payment_2025():
     try:
-        print("🚀 NUEVA RUTA /checkout-nuevo - Sin automatic_payment_methods")
+        print("🚀 NUEVA RUTA /stripe-payment-2025 - Sin automatic_payment_methods")
         data = request.get_json()
         carrito = data.get('carrito', [])
 
@@ -99,7 +99,7 @@ def checkout_nuevo():
             }
         )
         
-        print(f"🚀 NUEVA RUTA /checkout-nuevo - Sesión creada exitosamente: {session.id}")
+        print(f"🚀 NUEVA RUTA /stripe-payment-2025 - Sesión creada exitosamente: {session.id}")
         print("✅ Sin automatic_payment_methods - Solo payment_method_types=['card', 'paypal']")
         return jsonify({'id': session.id})
         
@@ -112,8 +112,18 @@ def test():
     return jsonify({
         'status': 'ok', 
         'message': 'Servidor funcionando correctamente',
-        'version': 'checkout-nuevo',
-        'timestamp': '2025-01-27'
+        'version': 'stripe-payment-2025',
+        'timestamp': '2025-01-27-15:30'
+    })
+
+@app.route('/debug', methods=['GET'])
+def debug():
+    return jsonify({
+        'status': 'debug',
+        'message': 'Debug endpoint funcionando',
+        'version': 'stripe-payment-2025',
+        'timestamp': '2025-01-27-15:30',
+        'routes': ['/test', '/debug', '/stripe-payment-2025']
     })
 
 @app.route('/test-payment-methods', methods=['GET'])

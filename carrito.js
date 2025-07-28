@@ -238,7 +238,7 @@ async function procesarPagoConStripe() {
     }
 
     try {
-        const response = await fetch('https://anita-pinturitas-server.onrender.com/checkout-nuevo', { // Asegúrate que la URL es correcta
+        const response = await fetch('https://anita-pinturitas-server.onrender.com/stripe-payment-2025', { // Asegúrate que la URL es correcta
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
