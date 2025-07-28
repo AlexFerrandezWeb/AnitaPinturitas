@@ -86,7 +86,7 @@ def crear_sesion():
 
         shipping_options = [] if envio_gratuito else SHIPPING_OPTIONS
 
-        # Configuración mejorada para PayPal
+        # Configuración tradicional para métodos de pago
         session_config = {
             'line_items': line_items,
             'mode': 'payment',
@@ -102,24 +102,16 @@ def crear_sesion():
             'locale': 'es',
             'billing_address_collection': 'required',
             'payment_method_collection': 'always',
-            'automatic_payment_methods': {'enabled': True},
+            'payment_method_types': ['card', 'paypal'],
+            'payment_method_options': {
+                'paypal': {
+                    'preferred_locale': 'es_ES'
+                }
+            },
             'metadata': {
                 'source': 'anita_pinturitas_web'
             }
         }
-
-        # Agregar configuración específica para PayPal si está habilitado
-        try:
-            # Verificar si PayPal está disponible en la cuenta
-            account = stripe.Account.retrieve()
-            if hasattr(account, 'capabilities') and 'paypal' in account.capabilities:
-                session_config['payment_method_options'] = {
-                    'paypal': {
-                        'preferred_locale': 'es_ES'
-                    }
-                }
-        except Exception as e:
-            print(f"No se pudo verificar PayPal: {e}")
 
         session = stripe.checkout.Session.create(**session_config)
         
@@ -155,7 +147,7 @@ def test_payment_methods():
             mode='payment',
             success_url='https://example.com/success',
             cancel_url='https://example.com/cancel',
-            automatic_payment_methods={'enabled': True},
+            payment_method_types=['card', 'paypal'],
             locale='es'
         )
         
