@@ -41,10 +41,10 @@ SHIPPING_OPTIONS = [
     },
 ]
 
-@app.route('/crear-sesion', methods=['POST'])
-def crear_sesion():
+@app.route('/pagar-ahora', methods=['POST'])
+def pagar_ahora():
     try:
-        print("✅ Código actualizado - usando payment_method_types en lugar de automatic_payment_methods")
+        print("🚀 NUEVA RUTA /pagar-ahora - Sin automatic_payment_methods")
         data = request.get_json()
         carrito = data.get('carrito', [])
 
@@ -99,8 +99,8 @@ def crear_sesion():
             }
         )
         
-        print(f"Sesión creada exitosamente: {session.id}")
-        print("✅ Código actualizado - usando payment_method_types en lugar de automatic_payment_methods")
+        print(f"🚀 NUEVA RUTA /pagar-ahora - Sesión creada exitosamente: {session.id}")
+        print("✅ Sin automatic_payment_methods - Solo payment_method_types=['card', 'paypal']")
         return jsonify({'id': session.id})
         
     except Exception as e:
