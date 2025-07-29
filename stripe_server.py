@@ -15,9 +15,6 @@ CURRENCY = 'eur'
 SUCCESS_URL = 'https://anita-pinturitas-server.onrender.com/success'
 CANCEL_URL = 'https://anita-pinturitas-server.onrender.com/cancel'
 
-# Imagen por defecto para productos sin imagen
-IMAGEN_POR_DEFECTO = "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=300&fit=crop&crop=center"
-
 SHIPPING_OPTIONS = [
     {
         'shipping_rate_data': {
@@ -41,10 +38,10 @@ SHIPPING_OPTIONS = [
     },
 ]
 
-@app.route('/stripe-payment-2025', methods=['POST'])
-def stripe_payment_2025():
+@app.route('/crear-sesion', methods=['POST'])
+def crear_sesion():
     try:
-        print("🚀 NUEVA RUTA /stripe-payment-2025 - Sin automatic_payment_methods")
+        print("Recibida petición para crear sesión")
         data = request.get_json()
         carrito = data.get('carrito', [])
 
@@ -53,25 +50,12 @@ def stripe_payment_2025():
 
         line_items = []
         for producto in carrito:
-            product_data = {
-                'name': producto['nombre'],
-                'images': []
-            }
-
-            imagen_url = producto.get('imagen')
-            if imagen_url:
-                if imagen_url.startswith('/'):
-                    imagen_url = f"https://anitapinturitas.es{imagen_url}"
-                elif not imagen_url.startswith('http'):
-                    imagen_url = f"https://anitapinturitas.es/{imagen_url.lstrip('/')}"
-                product_data['images'].append(imagen_url)
-            else:
-                product_data['images'].append(IMAGEN_POR_DEFECTO)
-
             line_items.append({
                 'price_data': {
                     'currency': CURRENCY,
-                    'product_data': product_data,
+                    'product_data': {
+                        'name': producto['nombre'],
+                    },
                     'unit_amount': int(float(producto['precio']) * 100),
                 },
                 'quantity': int(producto['cantidad']),
@@ -93,14 +77,13 @@ def stripe_payment_2025():
             shipping_options=shipping_options,
             locale='es',
             billing_address_collection='required',
-            payment_method_types=['card', 'paypal'],  # Versión corregida sin automatic_payment_methods
+            payment_method_types=['card'],
             metadata={
                 'source': 'anita_pinturitas_web'
             }
         )
         
-        print(f"🚀 NUEVA RUTA /stripe-payment-2025 - Sesión creada exitosamente: {session.id}")
-        print("✅ Sin automatic_payment_methods - Solo payment_method_types=['card', 'paypal']")
+        print(f"Sesión creada exitosamente: {session.id}")
         return jsonify({'id': session.id})
         
     except Exception as e:
@@ -112,108 +95,9 @@ def test():
     return jsonify({
         'status': 'ok', 
         'message': 'Servidor funcionando correctamente',
-        'version': 'stripe-payment-2025',
-        'timestamp': '2025-01-27-15:30'
+        'version': 'original-simple',
+        'timestamp': '2025-01-27-16:30'
     })
-
-@app.route('/debug', methods=['GET'])
-def debug():
-    return jsonify({
-        'status': 'debug',
-        'message': 'Debug endpoint funcionando',
-        'version': 'stripe-payment-2025',
-        'timestamp': '2025-01-27-15:30',
-        'routes': ['/test', '/debug', '/stripe-payment-2025']
-    })
-
-@app.route('/test-payment-methods', methods=['GET'])
-def test_payment_methods():
-    """Prueba para verificar qué métodos de pago están disponibles"""
-    try:
-        # Crear una sesión de prueba para verificar métodos de pago
-        test_session = stripe.checkout.Session.create(
-            payment_method_types=['card', 'paypal'],
-            line_items=[{
-                'price_data': {
-                    'currency': 'eur',
-                    'product_data': {
-                        'name': 'Test Product',
-                    },
-                    'unit_amount': 1000,  # 10€
-                },
-                'quantity': 1,
-            }],
-            mode='payment',
-            success_url='https://example.com/success',
-            cancel_url='https://example.com/cancel',
-        )
-        
-        return jsonify({
-            'status': 'ok',
-            'session_id': test_session.id,
-            'payment_methods': test_session.payment_method_types,
-            'message': 'Sesión de prueba creada correctamente'
-        })
-    except Exception as e:
-        return jsonify({
-            'status': 'error',
-            'error': str(e),
-            'message': 'Error al crear sesión de prueba'
-        }), 400
-
-@app.route('/crear-sesion-simple', methods=['POST'])
-def crear_sesion_simple():
-    """Crea una sesión solo con tarjetas para comparar"""
-    try:
-        print("Recibida petición para crear sesión simple (solo tarjetas)")
-        data = request.get_json()
-        carrito = data.get('carrito', [])
-        
-        line_items = []
-        for producto in carrito:
-            product_data = {
-                'name': producto['nombre'],
-            }
-            
-            if 'imagen' in producto and producto['imagen']:
-                imagen_url = producto['imagen']
-                if imagen_url.startswith('/'):
-                    imagen_url = f"https://anitapinturitas.es{imagen_url}"
-                elif not imagen_url.startswith('http'):
-                    imagen_url = f"https://anitapinturitas.es/{imagen_url.lstrip('/')}"
-                
-                product_data['images'] = [imagen_url]
-            
-            line_items.append({
-                'price_data': {
-                    'currency': CURRENCY,
-                    'product_data': product_data,
-                    'unit_amount': int(float(producto['precio']) * 100),
-                },
-                'quantity': int(producto['cantidad']),
-            })
-
-        session = stripe.checkout.Session.create(
-            payment_method_types=['card'],  # Solo tarjetas
-            line_items=line_items,
-            mode='payment',
-            success_url=SUCCESS_URL,
-            cancel_url=CANCEL_URL,
-            shipping_address_collection={
-                'allowed_countries': ALLOWED_COUNTRIES,
-            },
-            phone_number_collection={
-                'enabled': True,
-            },
-            locale='es'
-        )
-        
-        print(f"Sesión simple creada exitosamente: {session.id}")
-        return jsonify({'id': session.id})
-        
-    except Exception as e:
-        print(f"Error al crear sesión simple: {str(e)}")
-        return jsonify({'error': str(e)}), 400
 
 @app.route('/cancel', methods=['GET'])
 def cancel():
