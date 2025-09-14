@@ -21,6 +21,13 @@ CORS(app, origins=['*'], methods=['GET', 'POST', 'OPTIONS'], allow_headers=['Con
 # Configuración para MODO DE PRODUCCIÓN
 stripe.api_key = STRIPE_SECRET_KEY_PROD or os.getenv('STRIPE_SECRET_KEY_PROD') or os.getenv('STRIPE_SECRET_KEY') or 'sk_live_...'
 
+# PRUEBA DEFINITIVA - Mostrar qué clave está usando
+if stripe.api_key:
+    print(f"🔑 CLAVE EN USO (últimos 6): [{stripe.api_key[-6:]}]")
+    print(f"🔑 CLAVE COMPLETA: {stripe.api_key}")
+else:
+    print("❌ NO HAY CLAVE CONFIGURADA")
+
 # Configuración simplificada
 ALLOWED_COUNTRIES = ['ES']
 CURRENCY = 'eur'
