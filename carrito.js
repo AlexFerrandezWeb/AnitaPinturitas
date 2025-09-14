@@ -1,5 +1,5 @@
-// Clave pública de Stripe (¡reemplázala por la tuya!)
-const stripe = Stripe('pk_live_51RiBJlAV1sSXblTcz3sH2w36Nd753TcxPOGaRFdj1qKLi1EfDqd3N6S1zXq8RTRVQgxv3SBT31uW3kmDKxZG1t6A00vdarrbHY');
+// Clave pública de Stripe (MODO DE PRODUCCIÓN)
+    const stripe = Stripe('pk_live_51RiBJlAV1sSXblTcz3sH2w36Nd753TcxPOGaRFdj1qKLi1EfDqd3N6S1zXq8RTRVQgxv3SBT31uW3kmDKxZG1t6A00vdarrbHY');
 
 // --- FUNCIONES DEL CARRITO ---
 
@@ -238,7 +238,13 @@ async function procesarPagoConStripe() {
     }
 
     try {
-        const response = await fetch('https://anita-pinturitas-server.onrender.com/crear-sesion', { // Asegúrate que la URL es correcta
+        console.log('Enviando petición al servidor...');
+        
+        // Usar siempre el servidor de Render (producción)
+        const apiUrl = 'https://anita-pinturitas-server.onrender.com/crear-sesion';
+        
+        console.log('Conectando a:', apiUrl);
+        const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -249,9 +255,24 @@ async function procesarPagoConStripe() {
             })
         });
 
+        console.log('Respuesta del servidor:', response.status, response.statusText);
         const data = await response.json();
+        console.log('Datos recibidos:', data);
 
         if (response.ok && data.id) {
+            // Calcular el total de la compra para tracking
+            const subtotal = carrito.reduce((total, producto) => {
+                return total + (parseFloat(producto.precio) || 0) * (parseInt(producto.cantidad) || 0);
+            }, 0);
+            
+            // Aplicar envío si es necesario (6.95€ si el subtotal es menor a 62€)
+            const envio = subtotal >= 62 ? 0 : 6.95;
+            const totalCompra = subtotal + envio;
+            
+            // Guardar el valor total en localStorage para el tracking
+            localStorage.setItem('lastPurchaseTotal', totalCompra.toString());
+            console.log('Valor total guardado para tracking:', totalCompra, 'EUR');
+            
             // Redirigir a la página de pago de Stripe
             await stripe.redirectToCheckout({ sessionId: data.id });
         } else {
@@ -307,6 +328,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 cargarCarrito();
             }
         }
+    });
+
+    // Escuchar cuando el carrito se limpia desde otra pestaña (página de éxito)
+    window.addEventListener('cartCleared', (event) => {
+        console.log('Evento cartCleared recibido:', event.detail);
+        console.log('Carrito limpiado desde otra pestaña');
+        
+        // Forzar actualización del contador
+        actualizarContadorCarrito();
+        
+        // Si estamos en la página del carrito, recargar la interfaz
+        if (document.getElementById('carrito-productos')) {
+            console.log('Recargando interfaz del carrito...');
+            cargarCarrito();
+        }
+        
+        // Verificar que el carrito esté realmente vacío
+        const carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
+        console.log('Estado del carrito después del evento:', carritoActual);
     });
     
     // Asegurarse de que el contador esté siempre actualizado al cargar cualquier página

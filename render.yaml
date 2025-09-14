@@ -1,0 +1,25 @@
+services:
+  # Servidor de Stripe (Backend)
+  - type: web
+    name: anita-pinturitas-stripe
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python stripe_server.py
+    envVars:
+      - key: STRIPE_SECRET_KEY_PROD
+        sync: false  # Se configurará manualmente en Render
+      - key: PYTHON_VERSION
+        value: 3.10.11
+    healthCheckPath: /test
+
+  # Frontend estático (opcional - si quieres servir desde Render)
+  - type: web
+    name: anita-pinturitas-frontend
+    env: static
+    buildCommand: echo "No build needed for static site"
+    staticPublishPath: .
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
