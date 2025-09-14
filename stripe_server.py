@@ -22,11 +22,27 @@ CORS(app, origins=['*'], methods=['GET', 'POST', 'OPTIONS'], allow_headers=['Con
 stripe.api_key = STRIPE_SECRET_KEY_PROD or os.getenv('STRIPE_SECRET_KEY_PROD') or os.getenv('STRIPE_SECRET_KEY') or 'sk_live_...'
 
 # PRUEBA DEFINITIVA - Mostrar qué clave está usando
+print("=" * 50)
+print("🔍 DIAGNÓSTICO DE VARIABLES DE ENTORNO:")
+print("=" * 50)
+
+# Verificar todas las variables de entorno relacionadas con Stripe
+env_vars = ['STRIPE_SECRET_KEY_PROD', 'STRIPE_SECRET_KEY', 'STRIPE_API_KEY']
+for var in env_vars:
+    value = os.environ.get(var)
+    if value:
+        print(f"✅ {var}: {value[-6:]}")
+    else:
+        print(f"❌ {var}: NO CONFIGURADA")
+
+print("=" * 50)
+print("🔑 CLAVE FINAL EN USO:")
 if stripe.api_key:
-    print(f"🔑 CLAVE EN USO (últimos 6): [{stripe.api_key[-6:]}]")
-    print(f"🔑 CLAVE COMPLETA: {stripe.api_key}")
+    print(f"✅ CLAVE (últimos 6): [{stripe.api_key[-6:]}]")
+    print(f"✅ CLAVE COMPLETA: {stripe.api_key}")
 else:
     print("❌ NO HAY CLAVE CONFIGURADA")
+print("=" * 50)
 
 # Configuración simplificada
 ALLOWED_COUNTRIES = ['ES']
