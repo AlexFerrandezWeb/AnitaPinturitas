@@ -161,6 +161,29 @@ def success():
 def test():
     return jsonify({'message': 'Servidor funcionando correctamente', 'status': 'OK'})
 
+@app.route('/debug', methods=['GET'])
+def debug():
+    """Endpoint de diagnóstico para verificar archivos"""
+    import os
+    files_info = {}
+    
+    # Verificar si productos.json existe
+    if os.path.exists('productos.json'):
+        files_info['productos.json'] = 'EXISTS'
+        try:
+            with open('productos.json', 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                files_info['productos_count'] = len(data.get('categorias', []))
+        except Exception as e:
+            files_info['productos_error'] = str(e)
+    else:
+        files_info['productos.json'] = 'NOT FOUND'
+    
+    # Listar archivos en el directorio actual
+    files_info['current_files'] = os.listdir('.')
+    
+    return jsonify(files_info)
+
 @app.route('/facebook-feed.xml', methods=['GET'])
 def facebook_feed():
     """Genera el feed de productos para Meta (Facebook) en formato XML"""
