@@ -1,0 +1,5 @@
+[33me28bfbc[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m Añadido feed de Facebook para Meta
+[33m8aaf499[m Diagnóstico completo de variables de entorno de Stripe
+[33m7daf0ae[m Añadir logs para debug de clave de Stripe en Render
+[33mf128d74[m Configuración segura para Render - Variables de entorno
+[33m83f9dc8[m Resuelto conflicto de merge en carrito.js

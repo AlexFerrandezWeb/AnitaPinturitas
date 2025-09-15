@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+<channel>
+<title>Anita Pinturitas - Productos</title>
+<link>https://anitapinturitas.com</link>
+<description>Catálogo de productos de cosmética natural Anita Pinturitas</description>
+
+<item>
+<g:id>prod_SdTAGVPaPAE5Wu</g:id>
+<g:title><![CDATA[NUA GOLD (Crema facial) - 50 ml.]]></g:title>
+<g:description><![CDATA[Crema facial de día y noche para todo tipo de pieles. Aporta factores humectantes y nutrientes que fortalecen intensamente, con ácido hialurónico liposomal que actúa minimizando las líneas de expresión y de la edad.]]></g:description>
+<g:link>https://anitapinturitas.com/producto.html?id=prod_SdTAGVPaPAE5Wu</g:link>
+<g:image_link>https://anitapinturitas.com/assets/producto1.jpg</g:image_link>
+<g:price>61.00 EUR</g:price>
+<g:availability>in stock</g:availability>
+<g:condition>new</g:condition>
+<g:brand>Anita Pinturitas</g:brand>
+<g:product_type><![CDATA[alta cosmética]]></g:product_type>
+</item>
+
+<item>
+<g:id>prod_SdTImCUGKth7R9</g:id>
+<g:title><![CDATA[PLATINUM ESPIRIT (Crema facial) - 50 ml.]]></g:title>
+<g:description><![CDATA[Desde las primeras aplicaciones, Platinum Espirit devuelve la vitalidad y energía intensamente a la piel que se vuelve mucho más confortable.]]></g:description>
+<g:link>https://anitapinturitas.com/producto.html?id=prod_SdTImCUGKth7R9</g:link>
+<g:image_link>https://anitapinturitas.com/assets/producto2.jpg</g:image_link>
+<g:price>61.00 EUR</g:price>
+<g:availability>in stock</g:availability>
+<g:condition>new</g:condition>
+<g:brand>Anita Pinturitas</g:brand>
+<g:product_type><![CDATA[alta cosmética]]></g:product_type>
+</item>
+
+</channel>
+</rss>
