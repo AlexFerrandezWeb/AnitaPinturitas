@@ -3,21 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo Younique - Anita Pinturitas</title>
+    <title>Catálogo Younique Completo - Maquillaje y Belleza | Anita Pinturitas Asturias</title>
     
-    <!-- Meta tags para SEO -->
-    <meta name="description" content="Descubre nuestra selección de productos de belleza Younique. Maquillaje profesional, cuidado de la piel y productos de belleza de alta calidad en Asturias.">
-    <meta name="keywords" content="Younique, catálogo, productos de belleza, maquillaje, cuidado de la piel, Anita Pinturitas">
+    <!-- Meta tags optimizados para SEO -->
+    <meta name="description" content="Catálogo completo de productos Younique en Asturias. Maquillaje profesional, cuidado de la piel, pestañas magnéticas y productos de belleza de alta calidad. Asesoramiento experto.">
+    <meta name="keywords" content="catálogo Younique Asturias, maquillaje profesional, pestañas magnéticas, productos belleza, cuidado piel, maquillaje online, Anita Pinturitas, belleza Younique">
     <meta name="author" content="Ana María Ramos Rodríguez">
     <meta name="robots" content="index, follow">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://anitapinturitas.es/catalogo">
+
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '638002358969786');
+        fbq('track', 'PageView');
+        </script>
+        <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=638002358969786&ev=PageView&noscript=1"
+        /></noscript>
     
     <!-- Estilos -->
     <link rel="stylesheet" href="productos.css?v=1.0.2">
     <link rel="stylesheet" href="catalogo.css?v=1.0.2">
     <link rel="stylesheet" href="reset.css?v=1.0.2">
+    <link rel="stylesheet" href="breadcrumbs.css?v=1.0.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!-- Favicon -->
@@ -40,6 +57,16 @@
             }
         }
     }
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BR8JHHRQL9"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);} 
+      gtag('js', new Date());
+
+      gtag('config', 'G-BR8JHHRQL9');
     </script>
 </head>
 <body>
@@ -125,6 +152,18 @@
 
     <!-- Contenedor principal para los productos -->
     <main class="main-content">
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <ol class="breadcrumb-list">
+                <li class="breadcrumb-item">
+                    <a href="/" title="Volver al inicio">Inicio</a>
+                </li>
+                <li class="breadcrumb-separator">›</li>
+                <li class="breadcrumb-item active" aria-current="page">Catálogo Younique</li>
+            </ol>
+        </nav>
+
+        
         <div id="mostrador"></div>
     </main>
 

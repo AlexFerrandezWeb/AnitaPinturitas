@@ -233,7 +233,7 @@ async function procesarPagoConStripe() {
     if (btnComprar) {
         btnComprar.disabled = true;
         btnComprar.classList.add('loading');
-        btnComprar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando pago...';
+        btnComprar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procediendo al pago...';
         btnComprar.style.cursor = 'not-allowed';
     }
 

@@ -1,18 +1,42 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from flask_cors import CORS
 import stripe
 import os
+import json
 
 app = Flask(__name__)
 CORS(app)
 
-# Configuración de Stripe
-stripe.api_key = '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'
+# Configuración de Stripe - Usar variable de entorno
+stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
+
+# PRUEBA DEFINITIVA - Mostrar qué clave está usando
+print("=" * 50)
+print("🔍 DIAGNÓSTICO DE VARIABLES DE ENTORNO:")
+print("=" * 50)
+
+# Verificar todas las variables de entorno relacionadas con Stripe
+env_vars = ['STRIPE_SECRET_KEY']
+for var in env_vars:
+    value = os.environ.get(var)
+    if value:
+        print(f"✅ {var}: {value[-6:]}")
+    else:
+        print(f"❌ {var}: NO CONFIGURADA")
+
+print("=" * 50)
+print("🔑 CLAVE FINAL EN USO:")
+if stripe.api_key:
+    print(f"✅ CLAVE (últimos 6): [{stripe.api_key[-6:]}]")
+    print(f"✅ CLAVE COMPLETA: {stripe.api_key}")
+else:
+    print("❌ NO HAY CLAVE CONFIGURADA")
+print("=" * 50)
 
 # Configuración
 CURRENCY = 'eur'
-SUCCESS_URL = 'https://anitapinturitas.es/success'
-CANCEL_URL = 'https://anitapinturitas.es/cancel'
+SUCCESS_URL = 'https://anitapinturitas.com/success'
+CANCEL_URL = 'https://anitapinturitas.com/cancel'
 ALLOWED_COUNTRIES = ['ES', 'PT', 'FR', 'IT', 'DE', 'GB']
 IMAGEN_POR_DEFECTO = "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=300&fit=crop&crop=center"
 
@@ -79,9 +103,9 @@ def pagar_ahora_2025():
             imagen_url = producto.get('imagen')
             if imagen_url:
                 if imagen_url.startswith('/'):
-                    imagen_url = f"https://anitapinturitas.es{imagen_url}"
+                    imagen_url = f"https://anitapinturitas.com{imagen_url}"
                 elif not imagen_url.startswith('http'):
-                    imagen_url = f"https://anitapinturitas.es/{imagen_url.lstrip('/')}"
+                    imagen_url = f"https://anitapinturitas.com/{imagen_url.lstrip('/')}"
                 product_data['images'].append(imagen_url)
             else:
                 product_data['images'].append(IMAGEN_POR_DEFECTO)
@@ -132,6 +156,49 @@ def cancel():
 @app.route('/success', methods=['GET'])
 def success():
     return jsonify({'message': 'Pago exitoso'})
+
+@app.route('/facebook-feed.xml', methods=['GET'])
+def facebook_feed():
+    """Genera el feed de productos para Meta (Facebook) en formato XML"""
+    try:
+        # Cargar los productos desde el JSON
+        with open('productos.json', 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        # Iniciar el XML
+        xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+        xml += '<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">\n'
+        xml += '<channel>\n'
+        xml += '<title>Anita Pinturitas - Productos</title>\n'
+        xml += '<link>https://anitapinturitas.com</link>\n'
+        xml += '<description>Catálogo de productos de cosmética natural Anita Pinturitas</description>\n'
+        
+        # Procesar cada categoría y sus productos
+        for categoria in data.get('categorias', []):
+            for producto in categoria.get('productos', []):
+                xml += '<item>\n'
+                xml += f'<g:id>{producto.get("id", "")}</g:id>\n'
+                xml += f'<g:title><![CDATA[{producto.get("nombre", "")}]]></g:title>\n'
+                xml += f'<g:description><![CDATA[{producto.get("descripcion", "")}]]></g:description>\n'
+                xml += f'<g:link>https://anitapinturitas.com/producto.html?id={producto.get("id", "")}</g:link>\n'
+                xml += f'<g:image_link>https://anitapinturitas.com{producto.get("imagen", "")}</g:image_link>\n'
+                xml += f'<g:price>{producto.get("precio", 0)} EUR</g:price>\n'
+                xml += '<g:availability>in stock</g:availability>\n'
+                xml += '<g:condition>new</g:condition>\n'
+                xml += '<g:brand>Anita Pinturitas</g:brand>\n'
+                xml += f'<g:product_type><![CDATA[{categoria.get("nombre", "")}]]></g:product_type>\n'
+                xml += '</item>\n'
+        
+        xml += '</channel>\n'
+        xml += '</rss>'
+        
+        # Devolver como XML
+        return Response(xml, mimetype='text/xml')
+        
+    except Exception as e:
+        print(f"Error generando feed de Facebook: {e}")
+        return Response(f'<error>Error generando feed: {str(e)}</error>', 
+                       mimetype='text/xml', status=500)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000))) 

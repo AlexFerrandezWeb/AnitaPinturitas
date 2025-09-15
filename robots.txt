@@ -1,0 +1,41 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://anitapinturitas.es/sitemap.xml
+
+# Permitir acceso a recursos importantes
+Allow: /assets/
+Allow: /*.css
+Allow: /*.js
+Allow: /*.json
+
+# Bloquear archivos de prueba y desarrollo
+Disallow: /test_paypal.html
+Disallow: /test_stripe.html
+Disallow: /payment_server.py
+Disallow: /stripe_server.py
+Disallow: /stripe_config.py
+Disallow: /requirements.txt
+Disallow: /get-image.php
+
+# Bloquear archivos de configuración
+Disallow: /.htaccess
+Disallow: /.git/
+Disallow: /src/
+
+# Permitir acceso a Google y Bing
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Crawl-delay para evitar sobrecarga
+Crawl-delay: 1
+
+
+
+
+
+

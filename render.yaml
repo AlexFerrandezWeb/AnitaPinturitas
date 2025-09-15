@@ -5,9 +5,9 @@ services:
     env: python
     plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: python stripe_server.py
+    startCommand: python payment_server.py
     envVars:
-      - key: STRIPE_SECRET_KEY_PROD
+      - key: STRIPE_SECRET_KEY
         sync: false  # Se configurará manualmente en Render
       - key: PYTHON_VERSION
         value: 3.10.11

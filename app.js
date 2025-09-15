@@ -174,6 +174,19 @@ window.addEventListener('storage', (e) => {
     }
 });
 
+// Escuchar cuando el carrito se limpia desde otra pestaña (página de éxito)
+window.addEventListener('cartCleared', (event) => {
+    console.log('Evento cartCleared recibido en app.js:', event.detail);
+    console.log('Carrito limpiado desde otra pestaña - actualizando contador');
+    
+    // Forzar actualización del contador
+    actualizarContadorCarrito();
+    
+    // Verificar el estado del carrito
+    const carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
+    console.log('Estado del carrito en app.js:', carritoActual);
+});
+
 // Actualizar el contador cuando se modifica el localStorage en la misma ventana
 const originalSetItem = localStorage.setItem;
 localStorage.setItem = function(key, value) {

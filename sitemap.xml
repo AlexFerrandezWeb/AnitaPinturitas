@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+    
+    <!-- Página principal -->
+    <url>
+        <loc>https://anitapinturitas.es/</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <image:image>
+            <image:loc>https://anitapinturitas.es/assets/foto-portada.jpg</image:loc>
+            <image:title>Anita Pinturitas - Productos de Belleza</image:title>
+            <image:caption>Tienda de productos de belleza Younique y Naturnua en Asturias</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- Productos Naturnua -->
+    <url>
+        <loc>https://anitapinturitas.es/productos.html</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://anitapinturitas.es/assets/portada-naturnua.jpg</image:loc>
+            <image:title>Productos Naturnua</image:title>
+            <image:caption>Cremas faciales y productos de cuidado de la piel Naturnua</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- Catálogo Younique -->
+    <url>
+        <loc>https://anitapinturitas.es/catalogo.html</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://anitapinturitas.es/assets/portada-younique.jpg</image:loc>
+            <image:title>Catálogo Younique</image:title>
+            <image:caption>Catálogo completo de productos de belleza Younique</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- Página de producto individual -->
+    <url>
+        <loc>https://anitapinturitas.es/producto.html</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Carrito de compras -->
+    <url>
+        <loc>https://anitapinturitas.es/carrito.html</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    
+    <!-- Información de envíos -->
+    <url>
+        <loc>https://anitapinturitas.es/envios.html</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Política de privacidad -->
+    <url>
+        <loc>https://anitapinturitas.es/politica-privacidad.html</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    
+    <!-- Términos y condiciones -->
+    <url>
+        <loc>https://anitapinturitas.es/terminos-condiciones.html</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    
+    <!-- Política de devoluciones -->
+    <url>
+        <loc>https://anitapinturitas.es/politica-devoluciones.html</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    
+    <!-- Página de éxito -->
+    <url>
+        <loc>https://anitapinturitas.es/success.html</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.2</priority>
+    </url>
+    
+    <!-- Página de registro -->
+    <url>
+        <loc>https://anitapinturitas.es/registro.html</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+    </url>
+    
+</urlset>
+
+
+
+
+
+

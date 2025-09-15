@@ -336,8 +336,9 @@ main {
 }
 
 .boton-comprar,
-.boton-carrito {
-    flex: 1;
+.boton-carrito,
+.boton-ver-carrito {
+    flex: 0 1 auto;
     padding: 1.2rem 2rem;
     font-size: 1.2rem;
     font-weight: bold;
@@ -373,11 +374,26 @@ main {
 
 .boton-carrito {
     background-color: var(--text-color);
+    min-width: 120px;
 }
 
 .boton-carrito:hover {
     background-color: var(--accent-color);
     transform: translateY(-2px);
+}
+
+.boton-ver-carrito {
+    display: inline-block;
+    background-color: var(--primary-color);
+    margin-left: 0;
+    min-width: 140px;
+}
+
+.boton-ver-carrito:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+    color: white;
+    text-decoration: none;
 }
 
 /* Notificación */
@@ -768,9 +784,12 @@ main {
     }
 
     .boton-comprar,
-    .boton-carrito {
+    .boton-carrito,
+    .boton-ver-carrito {
         width: 100%;
         padding: 1rem;
+        margin-left: 0;
+        margin-top: 0.5rem;
     }
 
     .footer-content {

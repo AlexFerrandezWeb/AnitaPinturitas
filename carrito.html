@@ -3,16 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito - Anita Pinturitas</title>
+    <title>Carrito de Compras - Productos de Belleza | Anita Pinturitas Asturias</title>
     
-    <!-- Meta tags para SEO -->
-    <meta name="description" content="Tu carrito de compras en Anita Pinturitas. Revisa y gestiona tus productos seleccionados.">
-    <meta name="keywords" content="carrito de compras, Younique, productos de belleza, Anita Pinturitas">
+    <!-- Meta tags optimizados para SEO -->
+    <meta name="description" content="Finaliza tu compra de productos de belleza en Anita Pinturitas. Carrito seguro con productos Younique y Naturnua. Envíos gratis a toda España.">
+    <meta name="keywords" content="carrito compras belleza, productos Younique, productos Naturnua, comprar maquillaje online, Anita Pinturitas, belleza Asturias">
     <meta name="author" content="Ana María Ramos Rodríguez">
     <meta name="robots" content="index, follow">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://anitapinturitas.es/carrito">
+
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '638002358969786');
+        fbq('track', 'PageView');
+        </script>
+        <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=638002358969786&ev=PageView&noscript=1"
+        /></noscript>
     
     <!-- Estilos -->
     <link rel="stylesheet" href="productos.css?v=1.0.2">
@@ -36,6 +52,16 @@
 
     <!-- Stripe.js -->
     <script src="https://js.stripe.com/v3/"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BR8JHHRQL9"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);} 
+      gtag('js', new Date());
+
+      gtag('config', 'G-BR8JHHRQL9');
+    </script>
 </head>
 <body>
     <header class="header" role="banner">
@@ -120,7 +146,7 @@
                         Proceder al Pago
                     </button>
                     <p class="metodos-pago-info">
-                        <i class="fas fa-credit-card"></i> Pago seguro con tarjeta
+                        <i class="fas fa-credit-card"></i> Aceptamos tarjetas y PayPal
                     </p>
                     <a href="/productos.html" class="btn-seguir-comprando">
                         Continuar comprando
@@ -251,7 +277,7 @@
                     <i class="fas fa-lock"></i>
                     <span>Pago seguro con encriptación SSL</span>
                 </div>
-                <button type="submit" class="btn-confirmar">Pagar con Tarjeta</button>
+                <button type="submit" class="btn-confirmar">Pagar con Tarjeta o PayPal</button>
             </form>
         </div>
     </div>
@@ -399,34 +425,34 @@
         });
     }
 
-    const stripe = Stripe('TU_PK_AQUI'); // Sustituye por tu clave pública de Stripe
+    // const stripe = Stripe('TU_PK_AQUI'); // Comentado para evitar conflicto con carrito.js
 
-    const formularioPago = document.getElementById('formulario-pago');
-    if (formularioPago) {
-        formularioPago.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            // Recoge los datos del formulario
-            const nombre = document.getElementById('nombre').value;
-            const direccion = document.getElementById('direccion-facturacion').value;
-            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-            // Llama a tu backend de Stripe
-            try {
-                const response = await fetch('http://localhost:4242/crear-sesion', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ carrito, nombre, direccion })
-                });
-                const data = await response.json();
-                if (data.id) {
-                    // Redirige a Stripe Checkout
-                    stripe.redirectToCheckout({ sessionId: data.id });
-                } else {
-                    alert('Error al crear la sesión de pago: ' + (data.error || 'Desconocido'));
-                }
-            } catch (err) {
-                alert('Error de conexión con el servidor de pagos.');
-            }
-        });
+    // const formularioPago = document.getElementById('formulario-pago');
+    // if (formularioPago) {
+    //     formularioPago.addEventListener('submit', async function(e) {
+    //         e.preventDefault();
+    //         // Recoge los datos del formulario
+    //         const nombre = document.getElementById('nombre').value;
+    //         const direccion = document.getElementById('direccion-facturacion').value;
+    //         const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    //         // Llama a tu backend de Stripe
+    //         try {
+    //             const response = await fetch('http://localhost:4242/crear-sesion', {
+    //                 method: 'POST',
+    //                 headers: { 'Content-Type': 'application/json' },
+    //                 body: JSON.stringify({ carrito, nombre, direccion })
+    //             });
+    //             const data = await response.json();
+    //             if (data.id) {
+    //                 // Redirige a Stripe Checkout
+    //                 stripe.redirectToCheckout({ sessionId: data.id });
+    //             } else {
+    //                 alert('Error al crear la sesión de pago: ' + (data.error || 'Desconocido'));
+    //             }
+    //         } catch (err) {
+    //             alert('Error de conexión con el servidor de pagos.');
+    //         }
+    //     });
     }
     </script>
 

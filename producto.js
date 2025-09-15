@@ -125,6 +125,23 @@ async function cargarProducto() {
             // Actualizar el título de la página
             document.title = `${producto.nombre} - Anita Pinturitas`;
 
+            // Pixel Meta: ViewContent con content_id correcto
+            try {
+                if (window.fbq) {
+                    window.fbq('track', 'ViewContent', {
+                        content_id: producto.id,
+                        content_ids: [producto.id],
+                        content_type: 'product',
+                        content_name: producto.nombre,
+                        value: Number(producto.precio) || 0,
+                        currency: 'EUR',
+                        contents: [{ id: producto.id, quantity: 1 }]
+                    });
+                }
+            } catch (e) {
+                console.warn('Pixel ViewContent no enviado:', e);
+            }
+
             // Configurar el botón del carrito
             document.getElementById('boton-carrito').addEventListener('click', () => {
                 añadirAlCarrito(producto);
@@ -188,6 +205,23 @@ function añadirAlCarrito(producto) {
     });
     
     mostrarNotificacion(`Se han añadido ${cantidad} ${cantidad === 1 ? 'unidad' : 'unidades'} al carrito`);
+
+    // Pixel Meta: AddToCart con content_id correcto
+    try {
+        if (window.fbq) {
+            window.fbq('track', 'AddToCart', {
+                content_id: producto.id,
+                content_ids: [producto.id],
+                content_type: 'product',
+                content_name: producto.nombre,
+                value: (Number(producto.precio) || 0) * cantidad,
+                currency: 'EUR',
+                contents: [{ id: producto.id, quantity: cantidad }]
+            });
+        }
+    } catch (e) {
+        console.warn('Pixel AddToCart no enviado:', e);
+    }
 }
 
 // Función para mostrar notificación
