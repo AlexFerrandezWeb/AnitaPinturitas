@@ -157,6 +157,10 @@ def cancel():
 def success():
     return jsonify({'message': 'Pago exitoso'})
 
+@app.route('/test', methods=['GET'])
+def test():
+    return jsonify({'message': 'Servidor funcionando correctamente', 'status': 'OK'})
+
 @app.route('/facebook-feed.xml', methods=['GET'])
 def facebook_feed():
     """Genera el feed de productos para Meta (Facebook) en formato XML"""
