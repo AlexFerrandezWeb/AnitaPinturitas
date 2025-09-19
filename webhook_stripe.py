@@ -33,6 +33,10 @@ def webhook_stripe():
     Webhook que recibe notificaciones de Stripe cuando se completa un pago
     """
     
+    if not STRIPE_AVAILABLE:
+        print("❌ Stripe no está disponible")
+        return jsonify({'error': 'Stripe not available'}), 500
+    
     payload = request.get_data()
     sig_header = request.headers.get('Stripe-Signature')
     
@@ -74,6 +78,10 @@ def procesar_pago_completado(session):
     """
     Procesa un pago completado y envía notificación por correo
     """
+    
+    if not STRIPE_AVAILABLE:
+        print("❌ Stripe no está disponible para procesar pago")
+        return
     
     try:
         print(f"💰 Procesando pago completado: {session['id']}")
