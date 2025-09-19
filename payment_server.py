@@ -35,8 +35,8 @@ print("=" * 50)
 
 # Configuración
 CURRENCY = 'eur'
-SUCCESS_URL = 'https://anitapinturitas.com/success'
-CANCEL_URL = 'https://anitapinturitas.com/cancel'
+SUCCESS_URL = 'https://anitapinturitas.es/success'
+CANCEL_URL = 'https://anitapinturitas.es/cancel'
 ALLOWED_COUNTRIES = ['ES', 'PT', 'FR', 'IT', 'DE', 'GB']
 IMAGEN_POR_DEFECTO = "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&h=300&fit=crop&crop=center"
 
@@ -103,9 +103,9 @@ def pagar_ahora_2025():
             imagen_url = producto.get('imagen')
             if imagen_url:
                 if imagen_url.startswith('/'):
-                    imagen_url = f"https://anitapinturitas.com{imagen_url}"
+                    imagen_url = f"https://anitapinturitas.es{imagen_url}"
                 elif not imagen_url.startswith('http'):
-                    imagen_url = f"https://anitapinturitas.com/{imagen_url.lstrip('/')}"
+                    imagen_url = f"https://anitapinturitas.es/{imagen_url.lstrip('/')}"
                 product_data['images'].append(imagen_url)
             else:
                 product_data['images'].append(IMAGEN_POR_DEFECTO)
@@ -117,6 +117,15 @@ def pagar_ahora_2025():
                     'unit_amount': int(float(producto['precio']) * 100),
                 },
                 'quantity': int(producto['cantidad']),
+                'adjustable_quantity': {
+                    'enabled': True,
+                    'minimum': 1,
+                    'maximum': 10,
+                },
+                'metadata': {
+                    'product_id': producto.get('id', ''),
+                    'product_name': producto.get('nombre', ''),
+                }
             })
 
         shipping_options = [] if envio_gratuito else SHIPPING_OPTIONS
@@ -197,7 +206,7 @@ def facebook_feed():
         xml += '<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">\n'
         xml += '<channel>\n'
         xml += '<title>Anita Pinturitas - Productos</title>\n'
-        xml += '<link>https://anitapinturitas.com</link>\n'
+        xml += '<link>https://anitapinturitas.es</link>\n'
         xml += '<description>Catálogo de productos de cosmética natural Anita Pinturitas</description>\n'
         
         # Procesar cada categoría y sus productos
@@ -207,8 +216,8 @@ def facebook_feed():
                 xml += f'<g:id>{producto.get("id", "")}</g:id>\n'
                 xml += f'<g:title><![CDATA[{producto.get("nombre", "")}]]></g:title>\n'
                 xml += f'<g:description><![CDATA[{producto.get("descripcion", "")}]]></g:description>\n'
-                xml += f'<g:link>https://anitapinturitas.com/producto.html?id={producto.get("id", "")}</g:link>\n'
-                xml += f'<g:image_link>https://anitapinturitas.com{producto.get("imagen", "")}</g:image_link>\n'
+                xml += f'<g:link>https://anitapinturitas.es/producto.html?id={producto.get("id", "")}</g:link>\n'
+                xml += f'<g:image_link>https://anitapinturitas.es{producto.get("imagen", "")}</g:image_link>\n'
                 xml += f'<g:price>{producto.get("precio", 0)} EUR</g:price>\n'
                 xml += '<g:availability>in stock</g:availability>\n'
                 xml += '<g:condition>new</g:condition>\n'

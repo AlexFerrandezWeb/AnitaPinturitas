@@ -273,6 +273,27 @@ async function procesarPagoConStripe() {
             localStorage.setItem('lastPurchaseTotal', totalCompra.toString());
             console.log('Valor total guardado para tracking:', totalCompra, 'EUR');
             
+            // Pixel Meta: InitiateCheckout con datos dinámicos del carrito
+            try {
+                if (window.fbq) {
+                    const contentIds = carrito.map(producto => producto.id);
+                    const numItems = carrito.reduce((total, producto) => total + (parseInt(producto.cantidad) || 0), 0);
+                    const contentName = carrito.length === 1 ? carrito[0].nombre : `Checkout de ${carrito.length} productos`;
+                    
+                    fbq('track', 'InitiateCheckout', {
+                        content_type: 'product',
+                        content_ids: contentIds,                    // Array con TODOS los IDs del carrito
+                        content_name: contentName,                 // Nombre genérico o lista de productos
+                        num_items: numItems,                       // Número total de artículos
+                        value: totalCompra,                        // Suma TOTAL del valor del carrito
+                        currency: 'EUR'                            // Moneda fija en EUR
+                    });
+                    console.log('Pixel InitiateCheckout enviado:', { contentIds, numItems, totalCompra });
+                }
+            } catch (e) {
+                console.warn('Pixel InitiateCheckout no enviado:', e);
+            }
+            
             // Redirigir a la página de pago de Stripe
             await stripe.redirectToCheckout({ sessionId: data.id });
         } else {

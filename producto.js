@@ -125,17 +125,15 @@ async function cargarProducto() {
             // Actualizar el título de la página
             document.title = `${producto.nombre} - Anita Pinturitas`;
 
-            // Pixel Meta: ViewContent con content_id correcto
+            // Pixel Meta: ViewContent con variables dinámicas del producto
             try {
                 if (window.fbq) {
-                    window.fbq('track', 'ViewContent', {
-                        content_id: producto.id,
-                        content_ids: [producto.id],
+                    fbq('track', 'ViewContent', {
                         content_type: 'product',
-                        content_name: producto.nombre,
-                        value: Number(producto.precio) || 0,
-                        currency: 'EUR',
-                        contents: [{ id: producto.id, quantity: 1 }]
+                        content_ids: [producto.id],       // Variable dinámica del ID del producto
+                        content_name: producto.nombre,   // Variable dinámica del nombre del producto
+                        value: Number(producto.precio),  // Variable dinámica del precio del producto
+                        currency: 'EUR'                  // Moneda fija en EUR
                     });
                 }
             } catch (e) {
@@ -206,17 +204,15 @@ function añadirAlCarrito(producto) {
     
     mostrarNotificacion(`Se han añadido ${cantidad} ${cantidad === 1 ? 'unidad' : 'unidades'} al carrito`);
 
-    // Pixel Meta: AddToCart con content_id correcto
+    // Pixel Meta: AddToCart con variables dinámicas del producto
     try {
         if (window.fbq) {
-            window.fbq('track', 'AddToCart', {
-                content_id: producto.id,
-                content_ids: [producto.id],
+            fbq('track', 'AddToCart', {
                 content_type: 'product',
-                content_name: producto.nombre,
-                value: (Number(producto.precio) || 0) * cantidad,
-                currency: 'EUR',
-                contents: [{ id: producto.id, quantity: cantidad }]
+                content_ids: [producto.id],       // Variable dinámica del ID del producto
+                content_name: producto.nombre,   // Variable dinámica del nombre del producto
+                value: Number(producto.precio) * cantidad,  // Variable dinámica del precio total
+                currency: 'EUR'                  // Moneda fija en EUR
             });
         }
     } catch (e) {

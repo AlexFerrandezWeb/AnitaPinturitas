@@ -11,9 +11,9 @@ try:
 except ImportError:
     print("⚠️  Archivo stripe_prod_config.py no encontrado. Usando configuración por defecto.")
     STRIPE_SECRET_KEY_PROD = None
-    PROD_SUCCESS_URL = 'https://anitapinturitas.com/success'
-    PROD_CANCEL_URL = 'https://anitapinturitas.com/cancel'
-    FRONTEND_URL = 'https://anitapinturitas.com'
+    PROD_SUCCESS_URL = 'https://anitapinturitas.es/success'
+    PROD_CANCEL_URL = 'https://anitapinturitas.es/cancel'
+    FRONTEND_URL = 'https://anitapinturitas.es'
 
 app = Flask(__name__)
 CORS(app, origins=['*'], methods=['GET', 'POST', 'OPTIONS'], allow_headers=['Content-Type'])
@@ -170,6 +170,15 @@ def crear_sesion():
                     'unit_amount': int(float(producto['precio']) * 100),
                 },
                 'quantity': int(producto['cantidad']),
+                'adjustable_quantity': {
+                    'enabled': True,
+                    'minimum': 1,
+                    'maximum': 10,
+                },
+                'metadata': {
+                    'product_id': producto.get('id', ''),
+                    'product_name': producto.get('nombre', ''),
+                }
             })
 
         shipping_options = SHIPPING_OPTIONS_GRATIS if envio_gratuito else SHIPPING_OPTIONS
@@ -297,7 +306,7 @@ def crear_sesion_simple():
 @app.route('/cancel', methods=['GET'])
 def cancel():
     """Redirige a la página del carrito en el sitio principal"""
-    return """
+    return f"""
     <!DOCTYPE html>
     <html>
     <head>
@@ -305,7 +314,7 @@ def cancel():
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-            body {
+            body {{
                 font-family: Arial, sans-serif;
                 display: flex;
                 justify-content: center;
@@ -314,15 +323,15 @@ def cancel():
                 margin: 0;
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 color: white;
-            }
-            .container {
+            }}
+            .container {{
                 text-align: center;
                 padding: 40px;
                 background: rgba(255, 255, 255, 0.1);
                 border-radius: 15px;
                 backdrop-filter: blur(10px);
-            }
-            .spinner {
+            }}
+            .spinner {{
                 border: 4px solid rgba(255, 255, 255, 0.3);
                 border-top: 4px solid white;
                 border-radius: 50%;
@@ -330,11 +339,11 @@ def cancel():
                 height: 40px;
                 animation: spin 1s linear infinite;
                 margin: 0 auto 20px;
-            }
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
+            }}
+            @keyframes spin {{
+                0% {{ transform: rotate(0deg); }}
+                100% {{ transform: rotate(360deg); }}
+            }}
         </style>
         <meta http-equiv="refresh" content="2; url={FRONTEND_URL}/carrito.html">
     </head>
@@ -345,9 +354,9 @@ def cancel():
             <p>Si no eres redirigido automáticamente, <a href="{FRONTEND_URL}/carrito.html" style="color: #fff; text-decoration: underline;">haz clic aquí</a></p>
         </div>
         <script>
-            setTimeout(function() {
+            setTimeout(function() {{
                 window.location.href = '{FRONTEND_URL}/carrito.html';
-            }, 2000);
+            }}, 2000);
         </script>
     </body>
     </html>
