@@ -228,14 +228,26 @@ def crear_sesion_stripe():
         
         # Preparar line items para Stripe
         line_items = []
+        dominio_base = "https://anitapinturitas.es"  # Define tu dominio
+        
         for producto in carrito:
+            # --- LÓGICA PARA CORREGIR LA URL DE LA IMAGEN ---
+            ruta_imagen_relativa = producto.get('imagen', '')
+            
+            # Si la ruta no empieza ya con http, le añadimos el dominio base
+            if ruta_imagen_relativa and not ruta_imagen_relativa.startswith('http'):
+                url_completa_imagen = f"{dominio_base}{ruta_imagen_relativa}"
+            else:
+                url_completa_imagen = ruta_imagen_relativa
+            # ----------------------------------------------
+            
             line_items.append({
                 'price_data': {
                     'currency': 'eur',
                     'product_data': {
                         'name': producto.get('nombre', 'Producto'),
                         'description': producto.get('descripcion', ''),
-                        'images': [producto.get('imagen', '')]
+                        'images': [url_completa_imagen]  # <--- USA LA URL COMPLETA
                     },
                     'unit_amount': int(float(producto.get('precio', 0)) * 100)  # Convertir a céntimos
                 },
