@@ -2,10 +2,17 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, request, jsonify, render_template
-import stripe
 import os
 import json
-from enviar_correo_pago import enviar_correo_pago_exitoso
+
+# Importaciones opcionales para evitar errores de inicio
+try:
+    import stripe
+    from enviar_correo_pago import enviar_correo_pago_exitoso
+    STRIPE_AVAILABLE = True
+except ImportError as e:
+    print(f"⚠️ Advertencia: {e}")
+    STRIPE_AVAILABLE = False
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
