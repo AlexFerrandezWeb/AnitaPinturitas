@@ -4,7 +4,7 @@ services:
     env: python
     plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: python webhook_stripe.py
+    startCommand: gunicorn app:app
     envVars:
       - key: STRIPE_SECRET_KEY
         sync: false
