@@ -17,8 +17,12 @@ except ImportError as e:
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
-# Configurar CORS para permitir peticiones SOLO desde tu dominio
-CORS(app, resources={r"/*": {"origins": ["https://anitapinturitas.es", "https://www.anitapinturitas.es"]}})
+# Configurar CORS para permitir peticiones desde tu dominio y el servicio de Render
+CORS(app, resources={r"/*": {"origins": [
+    "https://anitapinturitas.es", 
+    "https://www.anitapinturitas.es",
+    "https://anita-pinturitas-server.onrender.com"  # Frontend de Render
+]}})
 
 # Configuración de Stripe
 stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
