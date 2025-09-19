@@ -315,7 +315,16 @@ def crear_sesion_stripe():
                 'allowed_countries': ['ES']
             },
             shipping_options=shipping_options,  # Opciones de envío
-            allow_promotion_codes=True  # Permitir códigos de descuento
+            allow_promotion_codes=True,  # Permitir códigos de descuento
+            payment_method_options={
+                'card': {
+                    'setup_future_usage': 'off_session'  # No permitir guardar tarjeta
+                }
+            },
+            # Deshabilitar pagos con enlace
+            payment_intent_data={
+                'setup_future_usage': 'off_session'
+            }
         )
         
         return jsonify({'id': session.id})
