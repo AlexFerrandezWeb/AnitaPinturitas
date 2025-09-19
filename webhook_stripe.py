@@ -17,12 +17,8 @@ except ImportError as e:
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
-# Configurar CORS para permitir peticiones desde anitapinturitas.es
-CORS(app, 
-     origins=['https://anitapinturitas.es', 'https://www.anitapinturitas.es'],
-     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-     allow_headers=['Content-Type', 'Authorization', 'X-Requested-With'],
-     supports_credentials=True)
+# Configurar CORS para permitir peticiones SOLO desde tu dominio
+CORS(app, resources={r"/*": {"origins": ["https://anitapinturitas.es", "https://www.anitapinturitas.es"]}})
 
 # Configuración de Stripe
 stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
@@ -207,19 +203,11 @@ def webhook_test():
         'message': 'El webhook está listo para recibir notificaciones de Stripe'
     })
 
-@app.route('/crear-sesion', methods=['POST', 'OPTIONS'])
+@app.route('/crear-sesion', methods=['POST'])
 def crear_sesion_stripe():
     """
     Crea una sesión de Stripe Checkout para el carrito
     """
-    # Manejar peticiones OPTIONS (preflight)
-    if request.method == 'OPTIONS':
-        response = jsonify({'status': 'OK'})
-        response.headers.add('Access-Control-Allow-Origin', 'https://anitapinturitas.es')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
-        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
-        return response
-    
     if not STRIPE_AVAILABLE:
         return jsonify({'error': 'Stripe no está disponible'}), 500
     
@@ -258,9 +246,7 @@ def crear_sesion_stripe():
             }
         )
         
-        response = jsonify({'id': session.id})
-        response.headers.add('Access-Control-Allow-Origin', 'https://anitapinturitas.es')
-        return response
+        return jsonify({'id': session.id})
         
     except Exception as e:
         print(f"Error creando sesión de Stripe: {str(e)}")
