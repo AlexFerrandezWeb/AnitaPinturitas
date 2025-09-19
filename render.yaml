@@ -11,7 +11,7 @@ services:
       - key: STRIPE_WEBHOOK_SECRET
         sync: false
       - key: EMAIL_USER
-        value: anitapinturitas6@gmail.com
+        value: anamaria.amrrg@gmail.com
       - key: EMAIL_PASS
         sync: false
       - key: SUCCESS_URL

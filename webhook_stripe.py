@@ -273,7 +273,7 @@ def serve_static(filename):
 
 if __name__ == '__main__':
     print("🚀 Iniciando servidor de webhook de Stripe...")
-    print("📧 Correo de destino: anitapinturitas6@gmail.com")
+    print("📧 Correo de destino: anamaria.amrrg@gmail.com")
     print("🔗 Webhook URL: /webhook-stripe")
     
     # Obtener el puerto de las variables de entorno (Render lo proporciona)

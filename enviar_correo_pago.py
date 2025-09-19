@@ -57,7 +57,7 @@ def enviar_correo_pago_exitoso(datos_pago):
     """
     
     # Configuración del correo
-    email_destino = "anitapinturitas6@gmail.com"
+    email_destino = "anamaria.amrrg@gmail.com"
     
     # Información básica del pago
     pago_id = datos_pago.get('id', 'N/A')

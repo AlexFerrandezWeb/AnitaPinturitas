@@ -78,7 +78,7 @@ def probar_correo():
         
         if resultado:
             print("✅ Correo de prueba enviado exitosamente")
-            print("📧 Revisa anitapinturitas6@gmail.com")
+            print("📧 Revisa anamaria.amrrg@gmail.com")
         else:
         print("❌ Error enviando correo de prueba")
         print("💡 Verifica la configuración de EMAIL_USER y EMAIL_PASS")

@@ -1,7 +1,7 @@
 # 📧 Configuración del Sistema de Correos para Pagos
 
 ## 🎯 Objetivo
-Recibir un correo automático en `anitapinturitas6@gmail.com` cada vez que un cliente complete un pago.
+Recibir un correo automático en `anamaria.amrrg@gmail.com` cada vez que un cliente complete un pago.
 
 ## 🔧 Configuración Requerida
 
@@ -24,7 +24,7 @@ STRIPE_SECRET_KEY=sk_live_...  # Tu clave secreta de Stripe
 STRIPE_WEBHOOK_SECRET=whsec_...  # Se obtiene al configurar el webhook
 
 # Gmail
-EMAIL_USER=anitapinturitas6@gmail.com
+EMAIL_USER=anamaria.amrrg@gmail.com
 EMAIL_PASS=tu_contraseña_de_16_caracteres
 
 # URLs
@@ -104,5 +104,5 @@ El correo incluirá:
 
 ### No llegan correos
 - Revisa la carpeta de spam
-- Verifica que `anitapinturitas6@gmail.com` sea correcto
+- Verifica que `anamaria.amrrg@gmail.com` sea correcto
 - Comprueba los logs del servidor webhook
