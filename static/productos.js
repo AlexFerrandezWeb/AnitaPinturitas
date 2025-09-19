@@ -89,7 +89,7 @@ let productosCargados = false;
 // Función para cargar las categorías
 async function cargarCategorias() {
     try {
-        const response = await fetch('/productos.json');
+        const response = await fetch('/static/data/productos.json');
         const data = await response.json();
         const categoriasGrid = document.querySelector('.categorias-grid');
         
@@ -117,7 +117,7 @@ async function cargarCategorias() {
 // Función para cargar los productos
 async function cargarProductos() {
     try {
-        const response = await fetch('/productos.json');
+        const response = await fetch('/static/data/productos.json');
         const data = await response.json();
         
         data.categorias.forEach(categoria => {

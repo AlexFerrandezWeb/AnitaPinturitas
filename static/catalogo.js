@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             toggleSpinner(true);
             console.log('Intentando cargar catalogo.json');
-            const response = await fetch('catalogo.json');
+            const response = await fetch('/static/data/catalogo.json');
             console.log('Respuesta recibida:', response);
             
             if (!response.ok) {
@@ -400,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const buscarProductos = async (termino) => {
         try {
             toggleSpinner(true);
-            const response = await fetch('catalogo.json');
+            const response = await fetch('/static/data/catalogo.json');
             const data = await response.json();
             const mostrador = document.querySelector('#mostrador');
             mostrador.innerHTML = '';

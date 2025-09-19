@@ -101,7 +101,7 @@ async function cargarProducto() {
             return;
         }
 
-        const response = await fetch('/productos.json');
+        const response = await fetch('/static/data/productos.json');
         const data = await response.json();
         
         // Buscar el producto en todas las categorías
