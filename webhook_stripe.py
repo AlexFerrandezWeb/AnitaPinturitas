@@ -199,6 +199,55 @@ def webhook_test():
         'message': 'El webhook está listo para recibir notificaciones de Stripe'
     })
 
+@app.route('/crear-sesion', methods=['POST'])
+def crear_sesion_stripe():
+    """
+    Crea una sesión de Stripe Checkout para el carrito
+    """
+    if not STRIPE_AVAILABLE:
+        return jsonify({'error': 'Stripe no está disponible'}), 500
+    
+    try:
+        data = request.get_json()
+        carrito = data.get('carrito', [])
+        
+        if not carrito:
+            return jsonify({'error': 'El carrito está vacío'}), 400
+        
+        # Preparar line items para Stripe
+        line_items = []
+        for producto in carrito:
+            line_items.append({
+                'price_data': {
+                    'currency': 'eur',
+                    'product_data': {
+                        'name': producto.get('nombre', 'Producto'),
+                        'description': producto.get('descripcion', ''),
+                        'images': [producto.get('imagen', '')]
+                    },
+                    'unit_amount': int(float(producto.get('precio', 0)) * 100)  # Convertir a céntimos
+                },
+                'quantity': int(producto.get('cantidad', 1))
+            })
+        
+        # Crear sesión de Stripe
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=line_items,
+            mode='payment',
+            success_url='https://anitapinturitas.es/success.html',
+            cancel_url='https://anitapinturitas.es/carrito.html',
+            shipping_address_collection={
+                'allowed_countries': ['ES']
+            }
+        )
+        
+        return jsonify({'id': session.id})
+        
+    except Exception as e:
+        print(f"Error creando sesión de Stripe: {str(e)}")
+        return jsonify({'error': 'Error interno del servidor'}), 500
+
 @app.route('/<path:filename>')
 def serve_static(filename):
     """
