@@ -254,16 +254,68 @@ def crear_sesion_stripe():
                 'quantity': int(producto.get('cantidad', 1))
             })
         
+        # Calcular total del carrito
+        total_carrito = sum(float(p.get('precio', 0)) * int(p.get('cantidad', 1)) for p in carrito)
+        
+        # Configurar envío gratuito (gratis a partir de 50€)
+        shipping_options = []
+        if total_carrito >= 50:
+            # Envío gratuito
+            shipping_options.append({
+                'shipping_rate_data': {
+                    'type': 'fixed_amount',
+                    'fixed_amount': {
+                        'amount': 0,
+                        'currency': 'eur',
+                    },
+                    'display_name': 'Envío gratuito',
+                    'delivery_estimate': {
+                        'minimum': {
+                            'unit': 'business_day',
+                            'value': 2,
+                        },
+                        'maximum': {
+                            'unit': 'business_day',
+                            'value': 5,
+                        },
+                    },
+                },
+            })
+        else:
+            # Envío estándar (5€)
+            shipping_options.append({
+                'shipping_rate_data': {
+                    'type': 'fixed_amount',
+                    'fixed_amount': {
+                        'amount': 500,  # 5€ en céntimos
+                        'currency': 'eur',
+                    },
+                    'display_name': 'Envío estándar (5€)',
+                    'delivery_estimate': {
+                        'minimum': {
+                            'unit': 'business_day',
+                            'value': 2,
+                        },
+                        'maximum': {
+                            'unit': 'business_day',
+                            'value': 5,
+                        },
+                    },
+                },
+            })
+        
         # Crear sesión de Stripe
         session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
+            payment_method_types=['card', 'paypal'],  # Incluir PayPal
             line_items=line_items,
             mode='payment',
             success_url='https://anitapinturitas.es/success.html',
             cancel_url='https://anitapinturitas.es/carrito.html',
             shipping_address_collection={
                 'allowed_countries': ['ES']
-            }
+            },
+            shipping_options=shipping_options,  # Opciones de envío
+            allow_promotion_codes=True  # Permitir códigos de descuento
         )
         
         return jsonify({'id': session.id})
