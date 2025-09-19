@@ -27,6 +27,76 @@ def pagina_de_inicio():
     """
     return render_template('index.html')
 
+@app.route('/productos.html')
+def productos():
+    """
+    Página de productos Naturnua
+    """
+    return render_template('productos.html')
+
+@app.route('/catalogo.html')
+def catalogo():
+    """
+    Catálogo de productos Younique
+    """
+    return render_template('catalogo.html')
+
+@app.route('/carrito.html')
+def carrito():
+    """
+    Página del carrito de compras
+    """
+    return render_template('carrito.html')
+
+@app.route('/producto.html')
+def producto():
+    """
+    Página individual de producto
+    """
+    return render_template('producto.html')
+
+@app.route('/success.html')
+def success():
+    """
+    Página de éxito después del pago
+    """
+    return render_template('success.html')
+
+@app.route('/envios.html')
+def envios():
+    """
+    Información de envíos
+    """
+    return render_template('envios.html')
+
+@app.route('/politica-privacidad.html')
+def politica_privacidad():
+    """
+    Política de privacidad
+    """
+    return render_template('politica-privacidad.html')
+
+@app.route('/politica-devoluciones.html')
+def politica_devoluciones():
+    """
+    Política de devoluciones
+    """
+    return render_template('politica-devoluciones.html')
+
+@app.route('/terminos-condiciones.html')
+def terminos_condiciones():
+    """
+    Términos y condiciones
+    """
+    return render_template('terminos-condiciones.html')
+
+@app.route('/registro.html')
+def registro():
+    """
+    Página de registro
+    """
+    return render_template('registro.html')
+
 @app.route('/webhook-stripe', methods=['POST'])
 def webhook_stripe():
     """
