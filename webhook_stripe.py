@@ -7,7 +7,7 @@ import os
 import json
 from enviar_correo_pago import enviar_correo_pago_exitoso
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', template_folder='templates')
 
 # Configuración de Stripe
 stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
@@ -16,7 +16,7 @@ stripe_webhook_secret = os.environ.get('STRIPE_WEBHOOK_SECRET')
 @app.route('/')
 def pagina_de_inicio():
     """
-    Página principal de Anita Pinturitas
+    Ruta principal que muestra la página de inicio de Anita Pinturitas
     """
     return render_template('index.html')
 
@@ -113,6 +113,13 @@ def webhook_test():
         'status': 'Webhook funcionando',
         'message': 'El webhook está listo para recibir notificaciones de Stripe'
     })
+
+@app.route('/<path:filename>')
+def serve_static(filename):
+    """
+    Sirve archivos estáticos (CSS, JS, imágenes) desde la raíz del sitio
+    """
+    return app.send_static_file(filename)
 
 if __name__ == '__main__':
     print("🚀 Iniciando servidor de webhook de Stripe...")
