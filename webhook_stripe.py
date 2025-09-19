@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import stripe
 import os
 import json
@@ -12,6 +12,13 @@ app = Flask(__name__)
 # Configuración de Stripe
 stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
 stripe_webhook_secret = os.environ.get('STRIPE_WEBHOOK_SECRET')
+
+@app.route('/')
+def pagina_de_inicio():
+    """
+    Página principal de Anita Pinturitas
+    """
+    return render_template('index.html')
 
 @app.route('/webhook-stripe', methods=['POST'])
 def webhook_stripe():
