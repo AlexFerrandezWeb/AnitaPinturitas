@@ -240,8 +240,8 @@ async function procesarPagoConStripe() {
     try {
         console.log('Enviando petición al servidor...');
         
-        // Usar siempre el servidor de Render (producción)
-        const apiUrl = 'https://anita-pinturitas-webhook.onrender.com/crear-sesion';
+        // Usar ruta relativa para evitar problemas de CORS
+        const apiUrl = '/crear-sesion';
         
         console.log('Conectando a:', apiUrl);
         const response = await fetch(apiUrl, {

@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: anita-pinturitas-webhook
+    name: anita-pinturitas-server
     env: python
     plan: free
     buildCommand: pip install -r requirements.txt

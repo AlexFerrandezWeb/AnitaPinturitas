@@ -241,7 +241,7 @@ async function procesarPagoConStripe() {
         console.log('Enviando petición al servidor...');
         
         // Usar siempre el servidor de Render (producción)
-        const apiUrl = 'https://anita-pinturitas-server.onrender.com/crear-sesion';
+        const apiUrl = '/crear-sesion';
         
         console.log('Conectando a:', apiUrl);
         const response = await fetch(apiUrl, {
