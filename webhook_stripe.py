@@ -316,13 +316,10 @@ def crear_sesion_stripe():
             },
             shipping_options=shipping_options,  # Opciones de envío
             allow_promotion_codes=True,  # Permitir códigos de descuento
-            # Deshabilitar Stripe Link completamente
+            # Configuración para deshabilitar Link
             payment_method_options={
                 'card': {
                     'setup_future_usage': 'off_session'
-                },
-                'link': {
-                    'enabled': False
                 }
             }
         )
