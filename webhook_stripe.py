@@ -257,9 +257,9 @@ def crear_sesion_stripe():
         # Calcular total del carrito
         total_carrito = sum(float(p.get('precio', 0)) * int(p.get('cantidad', 1)) for p in carrito)
         
-        # Configurar envío gratuito (gratis a partir de 50€)
+        # Configurar envío gratuito (gratis a partir de 62€)
         shipping_options = []
-        if total_carrito >= 50:
+        if total_carrito >= 62:
             # Envío gratuito
             shipping_options.append({
                 'shipping_rate_data': {
@@ -272,33 +272,33 @@ def crear_sesion_stripe():
                     'delivery_estimate': {
                         'minimum': {
                             'unit': 'business_day',
-                            'value': 2,
+                            'value': 5,
                         },
                         'maximum': {
                             'unit': 'business_day',
-                            'value': 5,
+                            'value': 10,
                         },
                     },
                 },
             })
         else:
-            # Envío estándar (5€)
+            # Envío estándar (6.95€)
             shipping_options.append({
                 'shipping_rate_data': {
                     'type': 'fixed_amount',
                     'fixed_amount': {
-                        'amount': 500,  # 5€ en céntimos
+                        'amount': 695,  # 6.95€ en céntimos
                         'currency': 'eur',
                     },
-                    'display_name': 'Envío estándar (5€)',
+                    'display_name': 'Envío estándar (6.95€)',
                     'delivery_estimate': {
                         'minimum': {
                             'unit': 'business_day',
-                            'value': 2,
+                            'value': 5,
                         },
                         'maximum': {
                             'unit': 'business_day',
-                            'value': 5,
+                            'value': 10,
                         },
                     },
                 },
