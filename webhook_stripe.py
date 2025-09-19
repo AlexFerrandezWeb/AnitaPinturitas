@@ -204,7 +204,11 @@ def serve_static(filename):
     """
     Sirve archivos estáticos (CSS, JS, imágenes) desde la raíz del sitio
     """
-    return app.send_static_file(filename)
+    try:
+        return app.send_static_file(filename)
+    except:
+        # Si no se encuentra en static, devolver 404
+        return "Archivo no encontrado", 404
 
 if __name__ == '__main__':
     print("🚀 Iniciando servidor de webhook de Stripe...")
