@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
 import os
 import json
 
@@ -15,6 +16,9 @@ except ImportError as e:
     STRIPE_AVAILABLE = False
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
+
+# Configurar CORS para permitir peticiones desde anitapinturitas.es
+CORS(app, origins=['https://anitapinturitas.es', 'https://www.anitapinturitas.es'])
 
 # Configuración de Stripe
 stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
