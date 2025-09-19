@@ -125,4 +125,7 @@ if __name__ == '__main__':
     print("🚀 Iniciando servidor de webhook de Stripe...")
     print("📧 Correo de destino: anitapinturitas6@gmail.com")
     print("🔗 Webhook URL: /webhook-stripe")
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    
+    # Obtener el puerto de las variables de entorno (Render lo proporciona)
+    port = int(os.environ.get('PORT', 5001))
+    app.run(host='0.0.0.0', port=port, debug=False)
